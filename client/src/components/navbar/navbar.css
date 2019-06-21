@@ -1,0 +1,20 @@
+.navbar-content {
+  display: flex;
+  padding: 0 25px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.session-button {
+  border: none;
+  background-color: #bf1313;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  padding: 8px 15px;
+  margin: 0 5px;
+}
+
+.navbar-logo {
+  font-size: 22px;
+}
