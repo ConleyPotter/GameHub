@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const keys = require('../../config/keys');
+const secretOrKey = require('../../config/keys').secretOrKey;
 const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
 
@@ -42,7 +42,7 @@ const register = async data => {
 
 		user.save();
 
-		const token = jwt.sign({ id: user._id }, keys.secretOrKey);
+		const token = jwt.sign({ id: user._id }, secretOrKey);
 
 		return { token, loggedIn: true, ...user._doc, password: null };
 	} catch (err) {
@@ -75,11 +75,28 @@ const login = async data => {
 		if (!passwordMatch) {
 			throw new Error('Password does not match');
 		}
-		const token = jwt.sign({ id: user._id }, keys.secretOrKey);
+		const token = jwt.sign({ id: user._id }, secretOrKey);
 		return { token, loggedIn: true, ...user._doc, password: null };
 	} catch (err) {
 		throw err;
 	}
 };
 
-module.exports = { register, logout, login };
+const verifyUser = async data => {
+	try {
+		const { token } = data;
+
+		const decoded = jwt.verify(token, secretOrKey);
+		const { id } = decoded;
+
+		const loggedIn = await User.findById(id).then(user => {
+			return user ? true : false;
+		});
+
+		return { loggedIn };
+	} catch (err) {
+		return { loggedIn: false };
+	}
+};
+
+module.exports = { register, logout, login, verifyUser };
