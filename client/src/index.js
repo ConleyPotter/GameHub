@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ApolloClient from 'apollo-client';
@@ -13,64 +13,62 @@ import { HashRouter } from 'react-router-dom';
 import { VERIFY_USER } from './graphql/mutations';
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => object._id || null
+	dataIdFromObject: object => object._id || null
 });
 const token = localStorage.getItem('auth-token');
 
 cache.writeData({
-  data: {
-    isLoggedIn: Boolean(token)
-  }
+	data: {
+		isLoggedIn: Boolean(token)
+	}
 });
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000/graphql',
-  headers: {
-    authorization: localStorage.getItem('auth-token')
-  }
+	uri: 'http://localhost:5000/graphql',
+	headers: {
+		authorization: localStorage.getItem('auth-token')
+	}
 });
 
 const errorLink = onError(({ graphQLErrors }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message }) => console.log(message));
-  }
+	if (graphQLErrors) {
+		graphQLErrors.map(({ message }) => console.log(message));
+	}
 });
 
 const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, httpLink]),
-  cache,
-  onError: ({ networkError, graphQLErrors }) => {
-    console.log('graphQLErrors', graphQLErrors);
-    console.log('networkError', networkError);
-  }
+	link: ApolloLink.from([errorLink, httpLink]),
+	cache,
+	onError: ({ networkError, graphQLErrors }) => {
+		console.log('graphQLErrors', graphQLErrors);
+		console.log('networkError', networkError);
+	}
 });
 
 if (token) {
-  client
-    .mutate({ mutation: VERIFY_USER, variables: { token } })
-    .then(({ data }) => {
-      cache.writeData({
-        data: {
-          isLoggedIn: data.verifyUser.loggedIn
-        }
-      });
-    });
+	client.mutate({ mutation: VERIFY_USER, variables: { token } }).then(({ data }) => {
+		cache.writeData({
+			data: {
+				isLoggedIn: data.verifyUser.loggedIn
+			}
+		});
+	});
 } else {
-  cache.writeData({
-    data: {
-      isLoggedIn: false
-    }
-  });
+	cache.writeData({
+		data: {
+			isLoggedIn: false
+		}
+	});
 }
 
 const Root = () => {
-  return (
-    <ApolloProvider client={client}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </ApolloProvider>
-  );
+	return (
+		<ApolloProvider client={client}>
+			<HashRouter>
+				<App />
+			</HashRouter>
+		</ApolloProvider>
+	);
 };
 
 ReactDOM.render(<Root />, document.getElementById('root'));
