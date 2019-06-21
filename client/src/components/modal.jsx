@@ -7,18 +7,30 @@ const Modal = ({ type, closeModal }) => {
   let form;
   switch (type) {
     case 'signup':
-      form = <SignupForm />;
+      form = <SignupForm closeModal={closeModal} />;
       break;
     case 'login':
-      form = <LoginForm />;
+      form = <LoginForm closeModal={closeModal} />;
       break;
     default:
       return null;
   }
+
+  let handleClose = e => {
+    if (e.target.classList[0] === 'modal-container') {
+      closeModal();
+    }
+  };
   return (
-    <div className='modal-container'>
-      <button onClick={() => closeModal()}>Close</button>
-      <div className='modal-content'>{form}</div>
+    <div className='modal-container' onClick={handleClose}>
+      {/* <button onClick={() => closeModal()}>Close</button> */}
+
+      <div className='modal-content'>
+        <span className='modal-close' onClick={() => closeModal()}>
+          <i className='fas fa-times' />
+        </span>
+        {form}
+      </div>
     </div>
   );
 };

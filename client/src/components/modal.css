@@ -11,7 +11,20 @@
   background-color: rgba(182, 182, 182, 0.651);
 }
 
+.modal-close {
+  position: absolute;
+  font-size: 28px;
+  color: rgba(182, 182, 182, 0.651);
+  top: 20px;
+  right: 20px;
+}
+
+.modal-close:hover {
+  cursor: pointer;
+}
+
 .modal-content {
+  position: relative;
   background-color: white;
-  padding: 25px;
+  padding: 35px;
 }
