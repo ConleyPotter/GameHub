@@ -45,6 +45,7 @@ class SignupForm extends React.Component {
         {register => (
           <div className='session-form-container'>
             <form onSubmit={e => this.handleSubmit(e, register)}>
+              <p>Signup</p>
               <input
                 value={this.state.username}
                 onChange={this.update('username')}
