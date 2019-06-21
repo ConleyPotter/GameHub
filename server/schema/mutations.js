@@ -4,7 +4,7 @@ const UserType = require('./user_type');
 const User = mongoose.model('user');
 const AuthService = require('../services/auth');
 
-const { GraphQLObjectType, GraphQLString, GraphQLNonNull } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } = graphql;
 
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
@@ -18,6 +18,15 @@ const Mutation = new GraphQLObjectType({
 			},
 			resolve(_, args) {
 				return AuthService.register(args);
+			}
+		},
+		logout: {
+			type: UserType,
+			args: {
+				_id: { type: GraphQLID }
+			},
+			resolve(_, args) {
+				return AuthService.logout(args);
 			}
 		}
 	}

@@ -5,7 +5,7 @@ const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean } = graphql;
 const UserType = new GraphQLObjectType({
 	name: 'UserType',
 	fields: {
-		id: {
+		_id: {
 			type: GraphQLID
 		},
 		username: {

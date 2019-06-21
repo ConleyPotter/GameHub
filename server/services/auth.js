@@ -49,4 +49,11 @@ const register = async data => {
 	}
 };
 
-module.exports = { register };
+const logout = async data => {
+	const { _id } = data;
+	const leavingUser = await User.findById(_id);
+	const token = '';
+	return { token, loggedIn: false, ...leavingUser._doc, password: null };
+};
+
+module.exports = { register, logout };
