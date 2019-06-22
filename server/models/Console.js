@@ -12,14 +12,14 @@ const ConsoleSchema = new Schema({
   games: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'games'
+      ref: 'game'
     }
   ]
 });
 
 ConsoleSchema.statics.findGames = function(consoleId) {
   return this.findById(consoleId)
-    .populate('game')
+    .populate('games')
     .then(console => console.games);
 };
 

@@ -22,6 +22,10 @@ const GameSchema = new Schema({
 		type: String,
 		required: true
 	},
+	imageURL: {
+		type: String,
+		required: true
+	},
 	videoUrl: {
 		type: String,
 		required: false

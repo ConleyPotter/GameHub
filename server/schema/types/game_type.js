@@ -11,6 +11,7 @@ const GameType = new GraphQLObjectType({
 		name: { type: GraphQLString },
 		description: { type: GraphQLString },
 		releaseDate: { type: GraphQLString },
+		imageURL: { type: GraphQLString },
 		videoUrl: { type: GraphQLString },
 		console: {
 			type: require('./console_type'),

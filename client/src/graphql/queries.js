@@ -38,6 +38,7 @@ export const FETCH_CONSOLE_BY_URL = gql`
       games {
         name
         description
+        imageURL
       }
     }
   }
