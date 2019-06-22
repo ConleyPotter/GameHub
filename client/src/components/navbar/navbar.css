@@ -76,11 +76,11 @@
   width: 100%;
 }
 
-.dropdown-console-logo {
+/* .dropdown-console-logo {
   max-width: 40px;
   max-height: 30px;
   padding: 5px 0;
-}
+} */
 .xbox {
   padding-left: 5px;
   padding-right: 5px;
@@ -89,4 +89,8 @@
 .console-dropdown-item a {
   display: flex;
   align-items: center;
+}
+
+.console-dropdown-item i {
+  font-size: 20px;
 }
