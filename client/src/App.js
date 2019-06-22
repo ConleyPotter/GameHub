@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
 import ConsoleDetail from './components/consoles/console_detail';
+import './App.scss';
 
 function App() {
   return (
