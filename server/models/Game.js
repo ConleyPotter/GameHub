@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const GameSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: 'users'
   },
   console: {
     type: Schema.Types.ObjectId,
-    ref: "consoles"
+    ref: 'consoles'
   },
   name: {
     type: String,
@@ -21,7 +21,11 @@ const GameSchema = new Schema({
   releaseDate: {
     type: String,
     required: true
+  },
+  imageURL: {
+    type: String,
+    required: true
   }
 });
 
-module.exports = mongoose.model("game", GameSchema);
+module.exports = mongoose.model('game', GameSchema);
