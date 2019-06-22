@@ -1,0 +1,92 @@
+.navbar-content {
+  display: flex;
+  padding: 0 25px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.session-button {
+  border: none;
+  background-color: #ff6b6b;
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); */
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  padding: 8px 15px;
+  margin: 0 5px;
+  outline: none;
+}
+
+.session-button:hover {
+  cursor: pointer;
+}
+
+.navbar-logo {
+  display: flex;
+  font-size: 22px;
+  align-items: center;
+}
+
+.fa-gamepad {
+  font-size: 28px;
+  padding-right: 10px;
+  color: #ff6b6b;
+}
+
+.nav-console-dropdown {
+  padding: 0 20px;
+  font-size: 18px;
+  position: relative;
+}
+
+.nav-console-dropdown:hover {
+  cursor: pointer;
+}
+
+.nav-console-dropdown i {
+  font-size: 14px;
+}
+
+.console-dropdown-list {
+  position: absolute;
+  width: 200px;
+  background-color: #f4f4f4;
+  top: 30px;
+  right: 20px;
+}
+
+.console-dropdown-list li {
+  list-style-type: none;
+  padding: 5px 10px;
+}
+
+.console-dropdown-list ul {
+  padding: 15px;
+  margin: 0;
+}
+
+.console-dropdown-list a {
+  color: black;
+  text-decoration: none;
+  width: 100%;
+}
+
+.dropdown-console-logo {
+  max-width: 40px;
+  max-height: 30px;
+  padding: 5px 0;
+}
+.xbox {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.console-dropdown-item a {
+  display: flex;
+  align-items: center;
+}
