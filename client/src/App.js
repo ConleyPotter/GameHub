@@ -10,8 +10,8 @@ function App() {
 		<div className="main-container">
 			<Route path="/" component={Navbar} />
 			<Switch>
+				<Route exact path="/games/:gameId" component={GameDetail} />
 				<Route path="/:consoleName" component={ConsoleDetail} />
-				<Route path="/games/:gameId" component={GameDetail} />
 			</Switch>
 		</div>
 	);
