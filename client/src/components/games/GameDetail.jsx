@@ -36,7 +36,7 @@ class GameDetail extends React.Component {
 					{({ loading, error, data }) => {
 						if (loading) return 'Loading...';
 						if (error) return `Error! ${error.message}`;
-						let { id, name, description, releaseDate, videoUrl, gameConsole } = data.game;
+						let { id, name, description, releaseDate, imageURL, videoUrl, gameConsole } = data.game;
 						const consoleName = gameConsole.name;
 						if (!videoUrl && !this.state.videoUrl) {
 							window.gapi.client.youtube.search
@@ -55,11 +55,17 @@ class GameDetail extends React.Component {
 									this.setState({ videoUrl });
 								});
 						}
+						let coverImage;
+						if (imageURL) coverImage = <img className="cover-image" src={imageURL} alt={`${name} cover`} />;
 
 						return (
 							<div className="display-page-container">
 								<div className="game-detail-container">
-									<h1 className="game-title">{name}</h1>
+									<div className="game-detail-header">
+										{coverImage}
+										<h1 className="game-title">{name}</h1>
+									</div>
+									<h3 className="detail-field-label">Trailer:</h3>
 									<div className="game-video-container">
 										<iframe
 											className="game-video"

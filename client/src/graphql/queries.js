@@ -14,6 +14,7 @@ export const FETCH_GAME = gql`
 			description
 			releaseDate
 			videoUrl
+			imageURL
 			gameConsole: console {
 				name
 			}
@@ -22,24 +23,24 @@ export const FETCH_GAME = gql`
 `;
 
 export const FETCH_CONSOLES = gql`
-  {
-    consoles {
-      id
-      name
-    }
-  }
+	{
+		consoles {
+			id
+			name
+		}
+	}
 `;
 
 export const FETCH_CONSOLE_BY_URL = gql`
-  query fetchConsoleByURL($url: String!) {
-    consoleByURL(url: $url) {
-      name
-      _id
-      games {
-        name
-        description
-        imageURL
-      }
-    }
-  }
+	query fetchConsoleByURL($url: String!) {
+		consoleByURL(url: $url) {
+			name
+			_id
+			games {
+				name
+				description
+				imageURL
+			}
+		}
+	}
 `;

@@ -12,10 +12,20 @@
 		flex-direction: column;
 		overflow: contain;
 
-		.game-title {
-			font-size: 28px;
-			font-weight: 700;
-			color: $dark-green;
+		.game-detail-header {
+			display: flex;
+			align-content: center;
+			margin-bottom: 10px;
+			.cover-image {
+				width: 150px;
+				height: auto;
+				margin-right: 10px;
+			}
+			.game-title {
+				font-size: 32px;
+				font-weight: 700;
+				color: $dark-green;
+			}
 		}
 
 		.game-video-container {
