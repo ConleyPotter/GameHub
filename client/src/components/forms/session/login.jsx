@@ -2,7 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import { LOGIN_USER } from '../../../graphql/mutations';
 import { withRouter } from 'react-router-dom';
-import './session_forms.css';
+import './session_forms.scss';
 
 class LoginForm extends React.Component {
   constructor(props) {
