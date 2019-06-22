@@ -38,7 +38,7 @@ class NavBar extends React.Component {
                     })
                   }
                 >
-                  Consoles <i class='fas fa-chevron-down' />
+                  Consoles <i className='fas fa-chevron-down' />
                   {this.state.showDropdown && <ConsoleDropdown />}
                 </div>
                 <Query query={IS_LOGGED_IN}>

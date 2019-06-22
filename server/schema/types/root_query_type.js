@@ -44,11 +44,11 @@ const RootQuery = new GraphQLObjectType({
         return Console.findById(id);
       }
     },
-    consoleByName: {
+    consoleByURL: {
       type: ConsoleType,
-      args: { name: { type: GraphQLString } },
-      resolve(_, { name }) {
-        return Console.find({ name: name });
+      args: { url: { type: GraphQLString } },
+      resolve(_, { url }) {
+        return Console.findOne({ url: url });
       }
     },
     games: {
