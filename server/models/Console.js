@@ -6,6 +6,9 @@ const ConsoleSchema = new Schema({
     type: String,
     required: true
   },
+  url: {
+    type: String
+  },
   games: [
     {
       type: Schema.Types.ObjectId,
@@ -16,9 +19,8 @@ const ConsoleSchema = new Schema({
 
 ConsoleSchema.statics.findGames = function(consoleId) {
   return this.findById(consoleId)
-    .populate("game")
+    .populate('game')
     .then(console => console.games);
 };
 
-
-module.exports = mongoose.model("console", ConsoleSchema);
+module.exports = mongoose.model('console', ConsoleSchema);

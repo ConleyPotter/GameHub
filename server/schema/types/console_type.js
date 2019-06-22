@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
-const graphql = require("graphql");
+const mongoose = require('mongoose');
+const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 const Console = mongoose.model('console');
 
 const ConsoleType = new GraphQLObjectType({
-  name: "ConsoleType",
-  fields: () =>  ({
+  name: 'ConsoleType',
+  fields: () => ({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
+    url: { type: GraphQLString },
     games: {
       type: new GraphQLList(require('./game_type')),
       resolve(parentValue) {
