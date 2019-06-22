@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { IS_LOGGED_IN } from '../../graphql/queries';
 import { Query, ApolloConsumer } from 'react-apollo';
 import Modal from '../modal';
+import ConsoleDropdown from './console_dropdown';
 import './navbar.css';
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { modalOpen: false, modalType: null };
+    this.state = { modalOpen: false, modalType: null, showDropdown: false };
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -24,10 +25,22 @@ class NavBar extends React.Component {
             <div className='navbar-content'>
               <div className='navbar-left'>
                 <div className='navbar-logo'>
+                  <i className='fas fa-gamepad' />
                   <p>GameHub</p>
                 </div>
               </div>
               <div className='navbar-right'>
+                <div
+                  className='nav-console-dropdown'
+                  onClick={() =>
+                    this.setState({
+                      showDropdown: !this.state.showDropdown
+                    })
+                  }
+                >
+                  Consoles <i class='fas fa-chevron-down' />
+                  {this.state.showDropdown && <ConsoleDropdown />}
+                </div>
                 <Query query={IS_LOGGED_IN}>
                   {({ data }) => {
                     if (data.isLoggedIn) {

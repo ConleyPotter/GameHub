@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
 .session-button {
   border: none;
   background-color: #ff6b6b;
@@ -22,5 +27,17 @@
 }
 
 .navbar-logo {
+  display: flex;
   font-size: 22px;
+  align-items: center;
+}
+
+.fa-gamepad {
+  font-size: 28px;
+  padding-right: 10px;
+  color: #ff6b6b;
+}
+
+.nav-console-dropdown {
+  padding: 0 10px;
 }

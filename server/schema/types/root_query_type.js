@@ -7,10 +7,16 @@ const ConsoleType = require('./console_type');
 const Game = mongoose.model('game');
 const GameType = require('./game_type');
 
-const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID } = graphql;
+const {
+  GraphQLObjectType,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLID,
+  GraphQLString
+} = graphql;
 
 const RootQuery = new GraphQLObjectType({
-  name: "RootQueryType",
+  name: 'RootQueryType',
   fields: {
     users: {
       type: new GraphQLList(UserType),
@@ -38,6 +44,13 @@ const RootQuery = new GraphQLObjectType({
         return Console.findById(id);
       }
     },
+    consoleByName: {
+      type: ConsoleType,
+      args: { name: { type: GraphQLString } },
+      resolve(_, { name }) {
+        return Console.find({ name: name });
+      }
+    },
     games: {
       type: new GraphQLList(GameType),
       resolve() {
@@ -52,6 +65,6 @@ const RootQuery = new GraphQLObjectType({
       }
     }
   }
-})
+});
 
 module.exports = RootQuery;
