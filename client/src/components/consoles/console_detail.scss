@@ -1,0 +1,17 @@
+.console-detail-header {
+  font-size: 32px;
+  padding: 20px;
+}
+
+.console-detail-game-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.console-game-list-item {
+  padding: 20px;
+  text-align: center;
+  img {
+    max-height: 200px;
+  }
+}
