@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { FETCH_GAME } from '../../graphql/queries';
 import config from '../../config';
+import './game_detail.scss';
 
 class GameDetail extends React.Component {
 	constructor(props) {
@@ -56,18 +57,29 @@ class GameDetail extends React.Component {
 						}
 
 						return (
-							<div>
-								<h1>{name}</h1>
-								<iframe
-									src={videoUrl || this.state.videoUrl}
-									frameBorder="0"
-									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-									allowFullScreen
-									title={`${name} featured video`}
-								/>
-								<p>Console: {consoleName}</p>
-								<p>{description}</p>
-								<p>Release Date: {releaseDate}</p>
+							<div className="display-page-container">
+								<div className="game-detail-container">
+									<h1 className="game-title">{name}</h1>
+									<div className="game-video-container">
+										<iframe
+											className="game-video"
+											src={videoUrl || this.state.videoUrl}
+											frameBorder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowFullScreen
+											title={`${name} featured video`}
+										/>
+									</div>
+									<p className="console-name">
+										<label className="detail-field-label">Console: </label>
+										{consoleName}
+									</p>
+									<p className="release-date">
+										<label className="detail-field-label">Release Date: </label>
+										{releaseDate}
+									</p>
+									<p className="game-description">{description}</p>
+								</div>
 							</div>
 						);
 					}}

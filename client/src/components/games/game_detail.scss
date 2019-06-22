@@ -1,0 +1,46 @@
+@import '../../variables.scss';
+
+.display-page-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+
+	.game-detail-container {
+		width: 80%;
+		display: flex;
+		flex-direction: column;
+		overflow: contain;
+
+		.game-title {
+			font-size: 28px;
+			font-weight: 700;
+			color: $dark-green;
+		}
+
+		.game-video-container {
+			align-self: center;
+			width: 800px;
+			max-width: 90%;
+			height: 450px;
+			margin: 10px 0;
+			.game-video {
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.detail-field-label {
+			font-weight: 700;
+			color: $dark-green;
+		}
+
+		.console-name {
+			margin-bottom: 10px;
+		}
+
+		.release-date {
+			margin-bottom: 10px;
+		}
+	}
+}

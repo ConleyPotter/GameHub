@@ -1,0 +1,66 @@
+html,
+head,
+body,
+main,
+div,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+input,
+label,
+ul,
+ol,
+li,
+button,
+a,
+link {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font: inherit;
+	color: inherit;
+	text-align: inherit;
+	text-decoration: inherit;
+	vertical-align: inherit;
+	box-sizing: inherit;
+	background: transparent;
+}
+
+body,
+html,
+#root,
+.app {
+	height: 100%;
+}
+
+ul {
+	list-style: none;
+}
+
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+input[type='password'],
+input[type='email'],
+input[type='text'],
+input[type='submit'],
+textarea,
+button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+button,
+input[type='submit'],
+a,
+link {
+	cursor: pointer;
+}
