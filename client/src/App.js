@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
 import { Route } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
