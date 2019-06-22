@@ -14,3 +14,16 @@ export const FETCH_CONSOLES = gql`
     }
   }
 `;
+
+export const FETCH_CONSOLE_BY_URL = gql`
+  query fetchConsoleByURL($url: String!) {
+    consoleByURL(url: $url) {
+      name
+      _id
+      games {
+        name
+        description
+      }
+    }
+  }
+`;
