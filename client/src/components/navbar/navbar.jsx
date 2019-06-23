@@ -18,6 +18,12 @@ class NavBar extends React.Component {
   }
 
   render() {
+    let dropdownBG = this.state.showDropdown ? 'dropdown-open' : undefined;
+    let chevron = this.state.showDropdown ? (
+      <i className='fas fa-chevron-up' />
+    ) : (
+      <i className='fas fa-chevron-down' />
+    );
     return (
       <ApolloConsumer>
         {client => (
@@ -31,14 +37,14 @@ class NavBar extends React.Component {
               </div>
               <div className='navbar-right'>
                 <div
-                  className='nav-console-dropdown'
+                  className={`nav-console-dropdown ${dropdownBG}`}
                   onClick={() =>
                     this.setState({
                       showDropdown: !this.state.showDropdown
                     })
                   }
                 >
-                  Consoles <i className='fas fa-chevron-down' />
+                  Consoles {chevron}
                   {this.state.showDropdown && <ConsoleDropdown />}
                 </div>
                 <Query query={IS_LOGGED_IN}>
@@ -95,6 +101,16 @@ class NavBar extends React.Component {
             </div>
             {this.state.modalOpen && (
               <Modal type={this.state.modalType} closeModal={this.closeModal} />
+            )}
+            {this.state.showDropdown && (
+              <div
+                className='dropdown-modal-close'
+                onClick={() =>
+                  this.setState({
+                    showDropdown: !this.state.showDropdown
+                  })
+                }
+              />
             )}
           </div>
         )}
