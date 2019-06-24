@@ -60,10 +60,11 @@ const Mutation = new GraphQLObjectType({
 				description: { type: GraphQLString },
 				releaseDate: { type: GraphQLString },
 				videoUrl: { type: GraphQLString },
-				console: { type: GraphQLID }
+				console: { type: GraphQLID },
+				imageURL: {type: GraphQLID}
 			},
-			resolve(_, { name, description, releaseDate, console, videoUrl }) {
-				return new Game({ name, description, releaseDate, videoUrl, console }).save();
+			resolve(_, { name, description, releaseDate, console, videoUrl, imageURL }) {
+				return new Game({ name, description, releaseDate, videoUrl, console, imageURL }).save();
 			}
 		},
 		deleteGame: {
