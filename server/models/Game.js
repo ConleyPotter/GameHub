@@ -29,7 +29,13 @@ const GameSchema = new Schema({
 	videoUrl: {
 		type: String,
 		required: false
-	}
+	},
+	reviews: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'review'
+		}
+	]
 });
 
 GameSchema.statics.findByFilters = function({ name, description, releasedAfter, releasedBefore, consoleName }) {
@@ -42,12 +48,14 @@ GameSchema.statics.findByFilters = function({ name, description, releasedAfter, 
 	dateFilters.releasedBefore = releasedBefore ? new Date(releasedBefore) : new Date('12/31/2100');
 
 	const populateFilters = {
-		console: { path: 'console' }
+		console: { path: 'console' },
+		reviews: { path: 'review' }
 	};
 	if (consoleName) populateFilters.console.match = { name: new RegExp(consoleName, 'i') };
 
 	return this.find(queryFilters)
 		.populate(populateFilters.console)
+		.populate(populateFilters.reviews)
 		.sort({ name: 1 })
 		.then(games =>
 			games.filter(game => {
@@ -59,6 +67,24 @@ GameSchema.statics.findByFilters = function({ name, description, releasedAfter, 
 				);
 			})
 		);
+};
+
+GameSchema.statics.findReviews = function(gameId) {
+	return this.findById(gameId)
+		.populate('reviews')
+		.then(game => game.reviews);
+};
+
+GameSchema.statics.addReview = function({ gameId, reviewId }) {
+	const Game = mongoose.model('game');
+	const Review = mongoose.model('review');
+
+	return Game.findById(gameId).then(game => {
+		return Review.findById(reviewId).then(async review => {
+			game.reviews.push(review);
+			return await game.save();
+		});
+	});
 };
 
 module.exports = mongoose.model('game', GameSchema);

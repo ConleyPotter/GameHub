@@ -6,6 +6,8 @@ const Console = mongoose.model('console');
 const ConsoleType = require('./console_type');
 const Game = mongoose.model('game');
 const GameType = require('./game_type');
+const Review = mongoose.model('review');
+const ReviewType = require('./review_type');
 
 const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString } = graphql;
 
@@ -63,6 +65,12 @@ const RootQuery = new GraphQLObjectType({
 			args: { id: { type: new GraphQLNonNull(GraphQLID) } },
 			resolve(_, { id }) {
 				return Game.findById(id);
+			}
+		},
+		reviews: {
+			type: new GraphQLList(ReviewType),
+			resolve() {
+				return Review.find({});
 			}
 		}
 	}

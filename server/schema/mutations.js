@@ -6,6 +6,8 @@ const GameType = require('./types/game_type');
 const Game = mongoose.model('game');
 const ConsoleType = require('./types/console_type');
 const Console = mongoose.model('console');
+const ReviewType = require('./types/review_type');
+const Review = mongoose.model('review');
 const AuthService = require('../services/auth');
 
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } = graphql;
@@ -87,6 +89,30 @@ const Mutation = new GraphQLObjectType({
 			args: { id: { type: GraphQLID } },
 			resolve(_, { id }) {
 				return Console.deleteOne({ _id: id });
+			}
+		},
+		newReview: {
+			type: ReviewType,
+			args: {
+				user: { type: new GraphQLNonNull(GraphQLID) },
+				game: { type: new GraphQLNonNull(GraphQLID) },
+				title: { type: new GraphQLNonNull(GraphQLString) },
+				content: { type: new GraphQLNonNull(GraphQLString) }
+			},
+			resolve: async function(_, { user, game, title, content }) {
+				const newReview = await new Review({ user, game, title, content }).save();
+				await User.addReview({ userId: user, reviewId: newReview });
+				await Game.addReview({ gameId: game, reviewId: newReview });
+				return newReview;
+			}
+		},
+		deleteReview: {
+			type: ReviewType,
+			args: {
+				_id: { type: new GraphQLNonNull(GraphQLID) }
+			},
+			resolve(_, { _id }) {
+				return Review.remove({ _id });
 			}
 		}
 	}
