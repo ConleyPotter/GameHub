@@ -46,7 +46,15 @@ const GameSchema = new Schema({
 	}
 });
 
-GameSchema.statics.findByFilters = function({ name, description, releasedAfter, releasedBefore, consoleName }) {
+GameSchema.statics.findByFilters = function({
+	name,
+	description,
+	releasedAfter,
+	releasedBefore,
+	consoleName,
+	ratingMax,
+	ratingMin
+}) {
 	const queryFilters = {};
 	if (name) queryFilters.name = new RegExp(name, 'i');
 	if (description) queryFilters.description = new RegExp(description, 'i');
@@ -68,10 +76,19 @@ GameSchema.statics.findByFilters = function({ name, description, releasedAfter, 
 		.then(games =>
 			games.filter(game => {
 				const formattedDate = new Date(game.releaseDate);
+
+				let ratingCheck = true;
+				if (ratingMin || ratingMax) {
+					ratingMin = ratingMin || 0;
+					ratingMax = ratingMax || 100;
+					ratingCheck = game.rating() >= ratingMin && game.rating() <= ratingMax;
+				}
+
 				return (
 					game.console &&
 					formattedDate >= dateFilters.releasedAfter &&
-					formattedDate <= dateFilters.releasedBefore
+					formattedDate <= dateFilters.releasedBefore &&
+					ratingCheck
 				);
 			})
 		);

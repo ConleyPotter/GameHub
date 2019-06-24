@@ -9,7 +9,7 @@ const GameType = require('./game_type');
 const Review = mongoose.model('review');
 const ReviewType = require('./review_type');
 
-const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString } = graphql;
+const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString, GraphQLInt } = graphql;
 
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
@@ -54,7 +54,9 @@ const RootQuery = new GraphQLObjectType({
 				description: { type: GraphQLString },
 				releasedAfter: { type: GraphQLString },
 				releasedBefore: { type: GraphQLString },
-				consoleName: { type: GraphQLString }
+				consoleName: { type: GraphQLString },
+				ratingMin: { type: GraphQLInt },
+				ratingMax: { type: GraphQLInt }
 			},
 			resolve: async (_, filters) => {
 				return await Game.findByFilters(filters);
