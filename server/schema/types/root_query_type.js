@@ -70,14 +70,14 @@ const RootQuery = new GraphQLObjectType({
       resolve(_, { id }) {
         return Game.findById(id);
       }
-    },
-    topGamesByConsole: {
-      type: new GraphQLList(GameType),
-      args: { id: { type: GraphQLID } },
-      resolve(_, { id }) {
-        return Console.findTopGames(id);
-      }
-    }
+    // },
+    // topGamesByConsole: {
+    //   type: new GraphQLList(GameType),
+    //   args: { id: { type: GraphQLID } },
+    //   resolve(_, { id }) {
+    //     return Console.findTopGames(id);
+    //   }
+    // }
   }
 });
 
