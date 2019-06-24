@@ -4,7 +4,7 @@ import { IS_LOGGED_IN } from '../../graphql/queries';
 import { Query, ApolloConsumer } from 'react-apollo';
 import Modal from '../modal';
 import ConsoleDropdown from './console_dropdown';
-import './navbar.css';
+import './navbar.scss';
 
 class NavBar extends React.Component {
   constructor(props) {
