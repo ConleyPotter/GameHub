@@ -73,6 +73,13 @@ const RootQuery = new GraphQLObjectType({
 				return Review.find({});
 			}
 		}
+		// topGamesByConsole: {
+		//   type: new GraphQLList(GameType),
+		//   args: { id: { type: GraphQLID } },
+		//   resolve(_, { id }) {
+		//     return Console.findTopGames(id);
+		//   }
+		// }
 	}
 });
 

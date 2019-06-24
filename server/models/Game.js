@@ -35,7 +35,15 @@ const GameSchema = new Schema({
 			type: Schema.Types.ObjectId,
 			ref: 'review'
 		}
-	]
+	],
+	likes: {
+		type: Number,
+		default: 0
+	},
+	dislikes: {
+		type: Number,
+		default: 0
+	}
 });
 
 GameSchema.statics.findByFilters = function({ name, description, releasedAfter, releasedBefore, consoleName }) {
@@ -67,6 +75,17 @@ GameSchema.statics.findByFilters = function({ name, description, releasedAfter, 
 				);
 			})
 		);
+};
+
+// GameSchema.statics.rating = function(gameId) {
+//   return this.findById(gameId).then(game => {
+//     let totalVotes = game.likes + game.dislikes;
+//     return Math.floor((game.likes / totalVotes) * 100);
+//   });
+// };
+GameSchema.methods.rating = function() {
+	let totalVotes = this.likes + this.dislikes;
+	return Math.floor(this.likes / totalVotes * 100);
 };
 
 GameSchema.statics.findReviews = function(gameId) {
