@@ -14,6 +14,12 @@ const ConsoleType = new GraphQLObjectType({
       resolve(parentValue) {
         return Console.findGames(parentValue._id);
       }
+    },
+    topGames: {
+      type: new GraphQLList(require('./game_type')),
+      resolve(parentValue) {
+        return Console.findTopGames(parentValue._id);
+      }
     }
   })
 });

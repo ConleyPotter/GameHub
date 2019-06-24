@@ -36,11 +36,11 @@ export const FETCH_CONSOLE_BY_URL = gql`
     consoleByURL(url: $url) {
       name
       _id
-      games {
-        name
-        description
-        imageURL
+      topGames {
         _id
+        name
+        imageURL
+        rating
       }
     }
   }
