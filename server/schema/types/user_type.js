@@ -1,6 +1,8 @@
+const mongoose = require('mongoose');
+const User = mongoose.model('user');
 const graphql = require('graphql');
 
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;
 
 const UserType = new GraphQLObjectType({
 	name: 'UserType',
@@ -19,6 +21,12 @@ const UserType = new GraphQLObjectType({
 		},
 		loggedIn: {
 			type: GraphQLBoolean
+		},
+		reviews: {
+			type: new GraphQLList(require('./review_type')),
+			resolve(parentValue) {
+				return User.findReviews(parentValue._id);
+			}
 		}
 	}
 });
