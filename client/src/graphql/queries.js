@@ -35,6 +35,7 @@ export const FETCH_CONSOLE_BY_URL = gql`
   query fetchConsoleByURL($url: String!) {
     consoleByURL(url: $url) {
       name
+      imageURL
       _id
       topGames {
         _id

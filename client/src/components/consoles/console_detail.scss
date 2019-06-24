@@ -1,8 +1,23 @@
 @import '../../variables.scss';
 
+.console-detail-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
 .console-detail-header {
-  font-size: 32px;
+  font-size: 38px;
   padding: 20px;
+}
+.console-detail-hero-image {
+  margin: 0 auto;
+  max-width: 1200px;
+  img {
+    max-width: 1200px;
+    max-height: 350px;
+    object-fit: cover;
+    padding-bottom: 10px;
+  }
 }
 
 // .console-detail-game-list {
@@ -36,9 +51,9 @@
   flex-direction: column;
   // padding: 15px 10px;
   background-color: #f4f4f4;
-  -webkit-box-shadow: 2px 3px 3px 2px rgba(0,0,0,0.37);
--moz-box-shadow: 2px 3px 3px 2px rgba(0,0,0,0.37);
-box-shadow: 2px 3px 3px 2px rgba(0,0,0,0.37);
+  -webkit-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+  -moz-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+  box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
 }
 
 .console-top-games-item {
@@ -58,8 +73,15 @@ box-shadow: 2px 3px 3px 2px rgba(0,0,0,0.37);
   }
 }
 
-.top-games-thumbnail {
+.console-top-games-item:hover {
+  background-color: $off-white;
+}
+
+.top-games-thumbnail img {
   width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: 50% 80%;
 }
 
 .top-games-game-info {
@@ -67,9 +89,8 @@ box-shadow: 2px 3px 3px 2px rgba(0,0,0,0.37);
     font-size: 16px;
     font-weight: bold;
   }
-  
+
   div {
     padding: 2px;
   }
 }
-

@@ -14,10 +14,15 @@ const ConsoleDetail = props => {
       {({ loading, error, data }) => {
         if (loading) return null;
         if (error) return error.message;
-        const { name, topGames } = data.consoleByURL;
+        const { name, imageURL, topGames } = data.consoleByURL;
         return (
-          <div>
-            <div className='console-detail-header'>{name}</div>
+          <div className='console-detail-container'>
+            <div className='console-detail-header'>
+              <div className='console-detail-hero-image'>
+                <img src={imageURL} alt={`${name} photo`} />
+                {name}
+              </div>
+            </div>
             <TopRatedGames games={topGames} />
           </div>
         );

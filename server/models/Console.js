@@ -16,7 +16,11 @@ const ConsoleSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'game'
     }
-  ]
+  ],
+  imageURL: {
+    type: String,
+    required: true
+  }
 });
 
 ConsoleSchema.statics.findGames = function(consoleId) {
