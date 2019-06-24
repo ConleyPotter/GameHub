@@ -1,18 +1,69 @@
+@import '../../variables.scss';
+
 .console-detail-header {
   font-size: 32px;
   padding: 20px;
 }
 
-.console-detail-game-list {
-  display: flex;
-  flex-wrap: wrap;
+// .console-detail-game-list {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+// .console-game-list-item {
+//   padding: 20px;
+//   text-align: center;
+//   img {
+//     max-height: 200px;
+//     width: auto;
+//   }
+// }
+
+.console-top-games-container {
+  // text-align: center;
+  width: 350px;
+  padding: 20px;
 }
 
-.console-game-list-item {
-  padding: 20px;
+.console-top-games-header {
+  font-size: 20px;
   text-align: center;
-  img {
-    max-height: 200px;
-    width: auto;
+}
+
+.console-top-games-list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  .console-top-games-item:nth-child(2n) {
+    background-color: $off-white;
   }
 }
+
+.console-top-games-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #f4f4f4;
+  div {
+    padding: 0 5px;
+  }
+  span {
+    color: $red;
+  }
+}
+
+.top-games-thumbnail {
+  width: 80px;
+}
+
+.top-games-game-info {
+  div:first-of-type {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  div {
+    padding: 2px;
+  }
+}
+
