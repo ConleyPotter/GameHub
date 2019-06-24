@@ -36,7 +36,17 @@ class GameDetail extends React.Component {
 					{({ loading, error, data }) => {
 						if (loading) return 'Loading...';
 						if (error) return `Error! ${error.message}`;
-						let { id, name, description, releaseDate, imageURL, videoUrl, gameConsole } = data.game;
+						let {
+							id,
+							name,
+							description,
+							releaseDate,
+							imageURL,
+							videoUrl,
+							gameConsole,
+							rating,
+							reviews
+						} = data.game;
 						const consoleName = gameConsole.name;
 						if (!videoUrl && !this.state.videoUrl) {
 							window.gapi.client.youtube.search
@@ -55,36 +65,64 @@ class GameDetail extends React.Component {
 									this.setState({ videoUrl });
 								});
 						}
-						let coverImage;
-						if (imageURL) coverImage = <img className="cover-image" src={imageURL} alt={`${name} cover`} />;
-
+						const coverImage = imageURL ? (
+							<img className="cover-image" src={imageURL} alt={`${name} cover`} />
+						) : null;
+						const reviewForm = <div className="game-review-form">{'{Review Form Placeholder}'}</div>;
+						const publishedReviews = (
+							<div className="published-reviews">{'{Published Reviews Placeholder}'}</div>
+						);
 						return (
-							<div className="display-page-container">
-								<div className="game-detail-container">
-									<div className="game-detail-header">
+							<div className="display-page-full-container">
+								<div className="game-detail-header">
+									<div className="game-detail-header-inner-container">
 										{coverImage}
-										<h1 className="game-title">{name}</h1>
+										<div className="game-detail-header-content">
+											<h1 className="game-title">{name}</h1>
+											<p className="game-rating">
+												<label className="detail-field-label">GameHub Rating: </label>
+												{rating}
+											</p>
+										</div>
 									</div>
-									<h3 className="detail-field-label">Trailer:</h3>
-									<div className="game-video-container">
-										<iframe
-											className="game-video"
-											src={videoUrl || this.state.videoUrl}
-											frameBorder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowFullScreen
-											title={`${name} featured video`}
-										/>
+								</div>
+								<div className="display-page-container">
+									<div className="game-detail">
+										<aside className="game-detail-aside">
+											<h3 className="detail-field-label">About</h3>
+											<p className="console-name">
+												<label className="detail-field-label">Console: </label>
+												{consoleName}
+											</p>
+											<p className="release-date">
+												<label className="detail-field-label">Release Date: </label>
+												{releaseDate}
+											</p>
+										</aside>
+										<main className="game-detail-main">
+											<div className="game-trailer-container">
+												<h3 className="detail-field-label">Trailer</h3>
+												<div className="game-video-container">
+													<iframe
+														className="game-video"
+														src={videoUrl || this.state.videoUrl}
+														frameBorder="0"
+														allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+														allowFullScreen
+														title={`${name} featured video`}
+													/>
+												</div>
+											</div>
+											<div className="game-description-container">
+												<label className="detail-field-label">Description</label>
+												<p className="game-description">{description}</p>
+											</div>
+										</main>
 									</div>
-									<p className="console-name">
-										<label className="detail-field-label">Console: </label>
-										{consoleName}
-									</p>
-									<p className="release-date">
-										<label className="detail-field-label">Release Date: </label>
-										{releaseDate}
-									</p>
-									<p className="game-description">{description}</p>
+									<div className="game-reviews">
+										{reviewForm}
+										<div className="published-reviews">{publishedReviews}</div>
+									</div>
 								</div>
 							</div>
 						);
