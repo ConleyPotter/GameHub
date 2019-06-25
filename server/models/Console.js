@@ -37,7 +37,8 @@ ConsoleSchema.statics.findTopGames = function(consoleId) {
         .sort((a, b) => {
           return b.rating() - a.rating();
         })
-        .slice(0, 10);
+        .slice(0, 10)
+        .filter(game => game.rating());
     });
 };
 

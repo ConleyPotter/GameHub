@@ -43,6 +43,12 @@ export const FETCH_CONSOLE_BY_URL = gql`
         imageURL
         rating
       }
+      upcomingGames {
+        _id
+        name
+        imageURL
+        releaseDate
+      }
     }
   }
 `;
