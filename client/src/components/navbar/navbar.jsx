@@ -51,7 +51,6 @@ class NavBar extends React.Component {
                 <Query query={IS_LOGGED_IN}>
                   {({ data }) => {
                     if (data.isLoggedIn) {
-                      console.log(data);
                       return (
                         <div className='navbar-user-actions'>
                           <div className='navbar-user-info'>

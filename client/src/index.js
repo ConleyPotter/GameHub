@@ -12,7 +12,6 @@ import { ApolloLink } from 'apollo-link';
 import { ApolloProvider } from 'react-apollo';
 import { HashRouter } from 'react-router-dom';
 import { VERIFY_USER } from './graphql/mutations';
-import { IS_LOGGED_IN } from './graphql/queries';
 
 const cache = new InMemoryCache({
   dataIdFromObject: object => object._id || null
@@ -52,7 +51,6 @@ if (token) {
   client
     .mutate({ mutation: VERIFY_USER, variables: { token } })
     .then(({ data }) => {
-      // console.log(data);
       client.writeData({
         data: {
           isLoggedIn: data.verifyUser.loggedIn,
