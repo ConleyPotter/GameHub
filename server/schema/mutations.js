@@ -10,7 +10,7 @@ const ReviewType = require('./types/review_type');
 const Review = mongoose.model('review');
 const AuthService = require('../services/auth');
 
-const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID, GraphQLInt } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID, GraphQLInt, GraphQLBoolean } = graphql;
 
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
@@ -117,17 +117,17 @@ const Mutation = new GraphQLObjectType({
 			type: GameType,
 			args: {
 				game: { type: new GraphQLNonNull(GraphQLID) },
-				title: { type: new GraphQLNonNull(GraphQLString) },
-				content: { type: new GraphQLNonNull(GraphQLString) }
+				title: { type: GraphQLString },
+				content: { type: GraphQLString },
+				liked: { type: new GraphQLNonNull(GraphQLBoolean) }
 			},
-			resolve: async function(_, { game, title, content }, ctx) {
+			resolve: async function(_, { game, title, content, liked }, ctx) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
 				if (validUser.loggedIn) {
-					console.log(validUser);
 					const user = validUser.id;
-					const newReview = await new Review({ user, game, title, content }).save();
+					const newReview = await new Review({ user, game, title, content, liked }).save();
 					await User.addReview({ userId: user, reviewId: newReview });
-					const updatedGame = await Game.addReview({ gameId: game, reviewId: newReview });
+					const updatedGame = await Game.addReview({ gameId: game, reviewId: newReview, liked });
 					return updatedGame;
 				} else {
 					throw new Error('Sorry, you need to be logged in to leave a review');

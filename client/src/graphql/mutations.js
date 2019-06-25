@@ -27,13 +27,17 @@ export const VERIFY_USER = gql`
 `;
 
 export const CREATE_REVIEW = gql`
-	mutation CreateReview($game: ID!, $title: String!, $content: String!) {
-		newReview(game: $game, title: $title, content: $content) {
+	mutation CreateReview($game: ID!, $title: String, $content: String, $liked: Boolean!) {
+		newReview(game: $game, title: $title, content: $content, liked: $liked) {
 			_id
+			likes
+			dislikes
+			rating
 			reviews {
 				_id
 				title
 				content
+				liked
 				user {
 					_id
 					username

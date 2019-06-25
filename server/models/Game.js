@@ -111,13 +111,14 @@ GameSchema.statics.findReviews = function(gameId) {
 		.then(game => game.reviews);
 };
 
-GameSchema.statics.addReview = function({ gameId, reviewId }) {
+GameSchema.statics.addReview = function({ gameId, reviewId, liked }) {
 	const Game = mongoose.model('game');
 	const Review = mongoose.model('review');
 
 	return Game.findById(gameId).then(game => {
 		return Review.findById(reviewId).then(async review => {
 			game.reviews.push(review);
+			liked ? game.likes++ : game.dislikes++;
 			return await game.save();
 		});
 	});

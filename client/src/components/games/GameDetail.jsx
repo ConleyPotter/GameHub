@@ -1,6 +1,6 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { FETCH_GAME } from '../../graphql/queries';
+import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW } from '../../graphql/queries';
 import config from '../../config';
 import ReviewList from '../reviews/ReviewList';
 import ReviewForm from '../forms/reviews/ReviewForm';
@@ -49,6 +49,7 @@ class GameDetail extends React.Component {
 							rating,
 							reviews
 						} = data.game;
+						console.log(data.game);
 						if (videoUrl) {
 							let videoUrlPath = videoUrl.split('=')[1];
 							videoUrl = `https://www.youtube.com/embed/${videoUrlPath}`;
@@ -123,7 +124,37 @@ class GameDetail extends React.Component {
 										</main>
 									</div>
 									<div className="game-reviews">
-										<ReviewForm gameId={_id} />
+										<Query
+											query={FETCH_CURRENT_USER_REVIEW}
+											variables={{ gameId: this.props.match.params.gameId }}
+										>
+											{({ loading, error, data }) => {
+												if (loading) return 'Loading Review Form...';
+												if (error) return `Error! ${error.message}`;
+												let title = '';
+												let content = '';
+												let reviewId = '';
+												let liked = 'neutral';
+												let previousReview = false;
+												if (data.currentUserReview) {
+													previousReview = true;
+													reviewId = data.currentUserReview._id;
+													title = data.currentUserReview.title;
+													content = data.currentUserReview.content;
+													liked = data.currentUserReview.liked;
+												}
+												return (
+													<ReviewForm
+														gameId={_id}
+														title={title}
+														content={content}
+														liked={liked}
+														previousReview={previousReview}
+														reviewId={reviewId}
+													/>
+												);
+											}}
+										</Query>
 										<ReviewList reviews={reviews} />
 									</div>
 								</div>

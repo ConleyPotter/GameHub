@@ -23,6 +23,7 @@ export const FETCH_GAME = gql`
 				}
 				title
 				content
+				liked
 			}
 			gameConsole: console {
 				name
@@ -51,6 +52,17 @@ export const FETCH_CONSOLE_BY_URL = gql`
 				imageURL
 				rating
 			}
+		}
+	}
+`;
+
+export const FETCH_CURRENT_USER_REVIEW = gql`
+	query fetchCurrentUserReview($gameId: ID!) {
+		currentUserReview(gameId: $gameId) {
+			_id
+			title
+			content
+			liked
 		}
 	}
 `;

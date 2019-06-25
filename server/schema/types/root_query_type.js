@@ -8,6 +8,7 @@ const Game = mongoose.model('game');
 const GameType = require('./game_type');
 const Review = mongoose.model('review');
 const ReviewType = require('./review_type');
+const AuthService = require('../../services/auth');
 
 const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString, GraphQLInt } = graphql;
 
@@ -73,6 +74,18 @@ const RootQuery = new GraphQLObjectType({
 			type: new GraphQLList(ReviewType),
 			resolve() {
 				return Review.find({});
+			}
+		},
+		currentUserReview: {
+			type: ReviewType,
+			args: { gameId: { type: new GraphQLNonNull(GraphQLID) } },
+			resolve: async (_, { gameId }, ctx) => {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return Review.findOne({ user: validUser.id, game: gameId }).then(review => review);
+				} else {
+					return 'Log in to leave a review';
+				}
 			}
 		}
 		// topGamesByConsole: {

@@ -9,9 +9,12 @@ class ReviewForm extends React.Component {
 		super(props);
 
 		this.state = {
-			title: '',
-			content: '',
+			title: this.props.title,
+			content: this.props.content,
 			game: this.props.gameId,
+			liked: this.props.liked,
+			editing: this.props.previousReview,
+			reviewId: this.props.reviewId,
 			message: ''
 		};
 	}
@@ -27,9 +30,8 @@ class ReviewForm extends React.Component {
 		} catch (err) {
 			return;
 		}
-
 		if (game) {
-			const newCachedGame = merge(game, { reviews: data.game.reviews });
+			const newCachedGame = merge(game, { reviews: data.newReview.reviews });
 			cache.writeQuery({
 				query: FETCH_GAME,
 				data: { game: newCachedGame }
@@ -37,17 +39,34 @@ class ReviewForm extends React.Component {
 		}
 	}
 
+	handleClick(field) {
+		return e => {
+			e.preventDefault();
+			field === 'like'
+				? this.setState({ liked: true, message: '' })
+				: this.setState({ liked: false, message: '' });
+		};
+	}
+
 	handleSubmit(e, createReview) {
 		e.preventDefault();
-		console.log(this.state);
+		if (this.state.liked === 'neutral') {
+			this.setState({ message: 'Select either "Like" or "Dislike" above' });
+			return;
+		}
 
-		createReview({
-			variables: {
-				title: this.state.title,
-				content: this.state.content,
-				game: this.state.game
-			}
-		});
+		if (this.state.editing) {
+			return;
+		} else {
+			createReview({
+				variables: {
+					title: this.state.title,
+					content: this.state.content,
+					game: this.state.game,
+					liked: this.state.liked
+				}
+			});
+		}
 	}
 
 	render() {
@@ -85,8 +104,25 @@ class ReviewForm extends React.Component {
 									rows="10"
 								/>
 							</div>
-							<button className="review-form-submit" type="submit">
-								Post Review
+							<button
+								className={`${this.state.liked === true ? 'liked ' : ''}like-button`}
+								onClick={this.handleClick('like')}
+							>
+								Like
+							</button>
+							<button
+								className={`${this.state.liked === false ? 'disliked ' : ''}dislike-button`}
+								onClick={this.handleClick('dislike')}
+							>
+								Dislike
+							</button>
+							<button
+								className={`${this.state.liked === true
+									? 'liked '
+									: this.state.liked === false ? 'disliked ' : ''}review-form-submit`}
+								type="submit"
+							>
+								{this.state.editing ? 'Update Review' : 'Post Review'}
 							</button>
 						</form>
 						<p>{this.state.message}</p>
