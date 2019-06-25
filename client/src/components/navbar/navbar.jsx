@@ -4,6 +4,7 @@ import { IS_LOGGED_IN } from '../../graphql/queries';
 import { VERIFY_USER } from '../../graphql/mutations';
 import { Query, ApolloConsumer } from 'react-apollo';
 import Modal from '../modal';
+import SearchBar from './search_bar';
 import ConsoleDropdown from './console_dropdown';
 import './navbar.scss';
 
@@ -35,6 +36,9 @@ class NavBar extends React.Component {
                   <i className='fas fa-gamepad' />
                   <p>GameHub</p>
                 </div>
+              </div>
+              <div className='navbar-mid'>
+                <SearchBar />
               </div>
               <div className='navbar-right'>
                 <div

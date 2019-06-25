@@ -23,6 +23,16 @@ export const FETCH_GAME = gql`
   }
 `;
 
+export const FETCH_GAMES = gql`
+  query FetchGaames($name: String!) {
+    games(name: $name) {
+      _id
+      name
+      imageURL
+    }
+  }
+`;
+
 export const FETCH_CONSOLES = gql`
   {
     consoles {
