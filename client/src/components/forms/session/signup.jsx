@@ -26,8 +26,9 @@ class SignupForm extends React.Component {
   }
 
   updateCache(client, { data }) {
+    const { loggedIn, username, _id } = data.register;
     client.writeData({
-      data: { isLoggedIn: data.register.loggedIn }
+      data: { isLoggedIn: data.register.loggedIn, currenUser: username }
     });
   }
 
