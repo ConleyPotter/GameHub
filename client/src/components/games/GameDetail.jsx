@@ -1,6 +1,6 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW } from '../../graphql/queries';
+import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW, FETCH_CURRENT_USER_ID } from '../../graphql/queries';
 import config from '../../config';
 import ReviewList from '../reviews/ReviewList';
 import ReviewForm from '../forms/reviews/ReviewForm';
@@ -9,7 +9,6 @@ import './game_detail.scss';
 class GameDetail extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			gapiReady: false
 		};
@@ -123,39 +122,52 @@ class GameDetail extends React.Component {
 										</main>
 									</div>
 									<div className="game-reviews">
-										<Query
-											query={FETCH_CURRENT_USER_REVIEW}
-											variables={{ gameId: this.props.match.params.gameId }}
-										>
-											{({ loading, error, data }) => {
-												if (loading) return 'Loading Review Form...';
-												if (error) return `Error! ${error.message}`;
-												// console.log(this.props.match.params.gameId);
-												// console.log(data);
-												let title = '';
-												let content = '';
-												let reviewId = '';
-												let liked = 'neutral';
-												let previousReview = false;
-												if (data.currentUserReview._id) {
-													previousReview = true;
-													reviewId = data.currentUserReview._id;
-													title = data.currentUserReview.title;
-													content = data.currentUserReview.content;
-													liked = data.currentUserReview.liked;
-												}
+										<Query query={FETCH_CURRENT_USER_ID}>
+											{({ data }) => {
+												let currentUserId = data.currentUserId ? data.currentUserId : '';
+												console.log(data);
 												return (
-													<ReviewForm
-														gameId={_id}
-														title={title}
-														content={content}
-														liked={liked}
-														previousReview={previousReview}
-														reviewId={reviewId}
-													/>
+													<Query
+														query={FETCH_CURRENT_USER_REVIEW}
+														variables={{
+															gameId: this.props.match.params.gameId,
+															userId: currentUserId
+														}}
+													>
+														{({ loading, error, data }) => {
+															if (loading) return 'Loading Review Form...';
+															if (error) return `Error! ${error.message}`;
+															console.log(data);
+															let title = '';
+															let content = '';
+															let reviewId = '';
+															let liked = 'neutral';
+															let previousReview = false;
+															if (data.currentUserReview && data.currentUserReview.user) {
+																previousReview = true;
+																reviewId = data.currentUserReview._id;
+																title = data.currentUserReview.title;
+																content = data.currentUserReview.content;
+																liked = data.currentUserReview.liked;
+																currentUserId = data.currentUserReview.user._id;
+															}
+															return (
+																<ReviewForm
+																	gameId={_id}
+																	title={title}
+																	content={content}
+																	liked={liked}
+																	previousReview={previousReview}
+																	reviewId={reviewId}
+																	currentUserId={currentUserId}
+																/>
+															);
+														}}
+													</Query>
 												);
 											}}
 										</Query>
+
 										<ReviewList reviews={reviews} />
 									</div>
 								</div>

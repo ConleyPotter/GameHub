@@ -20,7 +20,9 @@ const token = localStorage.getItem('auth-token');
 
 cache.writeData({
 	data: {
-		isLoggedIn: Boolean(token)
+		isLoggedIn: Boolean(token),
+		currentUserId: '',
+		currentUsername: ''
 	}
 });
 
@@ -48,16 +50,21 @@ const client = new ApolloClient({
 
 if (token) {
 	client.mutate({ mutation: VERIFY_USER, variables: { token } }).then(({ data }) => {
-		cache.writeData({
+		console.log(data.verifyUser);
+		client.writeData({
 			data: {
-				isLoggedIn: data.verifyUser.loggedIn
+				isLoggedIn: data.verifyUser.loggedIn,
+				currentUserId: data.verifyUser.id,
+				currentUsername: data.verifyUser.username
 			}
 		});
 	});
 } else {
-	cache.writeData({
+	client.writeData({
 		data: {
-			isLoggedIn: false
+			isLoggedIn: false,
+			currentUserId: '',
+			currentUsername: ''
 		}
 	});
 }

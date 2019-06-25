@@ -25,8 +25,13 @@ class LoginForm extends React.Component {
 	}
 
 	updateCache(client, { data }) {
+		console.log(data);
 		client.writeData({
-			data: { isLoggedIn: data.login.loggedIn }
+			data: {
+				isLoggedIn: data.login.loggedIn,
+				currentUserId: data.login._id,
+				currentUsername: data.login.username
+			}
 		});
 	}
 

@@ -114,7 +114,7 @@ const Mutation = new GraphQLObjectType({
 			}
 		},
 		newReview: {
-			type: GameType,
+			type: ReviewType,
 			args: {
 				game: { type: new GraphQLNonNull(GraphQLID) },
 				title: { type: GraphQLString },
@@ -128,7 +128,7 @@ const Mutation = new GraphQLObjectType({
 					const newReview = await new Review({ user, game, title, content, liked }).save();
 					await User.addReview({ userId: user, reviewId: newReview });
 					const updatedGame = await Game.addReview({ gameId: game, reviewId: newReview, liked });
-					return updatedGame;
+					return newReview;
 				} else {
 					throw new Error('Sorry, you need to be logged in to leave a review');
 				}
@@ -144,25 +144,36 @@ const Mutation = new GraphQLObjectType({
 			}
 		},
 		updateReview: {
-			type: GameType,
+			type: ReviewType,
 			args: {
 				_id: { type: new GraphQLNonNull(GraphQLID) },
 				title: { type: GraphQLString },
 				content: { type: GraphQLString },
 				liked: { type: new GraphQLNonNull(GraphQLBoolean) }
 			},
-			resolve: async function(_, args) {
-				const updatedReview = await Review.findOneAndUpdate({ _id: args._id }, args);
-				return Game.findById(updatedReview.game).then(async game => {
-					if (args.liked) {
-						game.dislikes--;
-						game.likes++;
-					} else {
-						game.likes--;
-						game.dislikes++;
-					}
-					return await game.save();
-				});
+			resolve: async function(_, args, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return await Review.findById(args._id).then(review => {
+						return Game.findById(review.game).then(async game => {
+							if (args.liked && !review.liked) {
+								game.dislikes--;
+								game.likes++;
+							} else if (!args.liked && review.liked) {
+								game.likes--;
+								game.dislikes++;
+							}
+							await game.save();
+							review.title = args.title;
+							review.content = args.content;
+							review.liked = args.liked;
+							review.date = Date.now();
+							return await review.save();
+						});
+					});
+				} else {
+					throw new Error('Sorry, you need to be logged in to update a review');
+				}
 			}
 		}
 	}

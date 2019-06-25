@@ -56,7 +56,11 @@ class NavBar extends React.Component {
 															e.preventDefault();
 															localStorage.removeItem('auth-token');
 															client.writeData({
-																data: { isLoggedIn: false }
+																data: {
+																	isLoggedIn: false,
+																	currentUserId: '',
+																	currentUsername: ''
+																}
 															});
 															this.props.history.push('/');
 														}}

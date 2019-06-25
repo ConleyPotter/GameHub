@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import { FETCH_GAME } from '../../../graphql/queries';
+import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW } from '../../../graphql/queries';
 import { CREATE_REVIEW, UPDATE_REVIEW } from '../../../graphql/mutations';
 import { merge } from 'lodash';
 import './review_form.scss';
@@ -17,37 +17,29 @@ class ReviewForm extends React.Component {
 			liked: this.props.liked,
 			editing: this.props.previousReview,
 			reviewId: this.props.reviewId,
+			currentUserId: this.props.currentUserId,
 			message: ''
 		};
 	}
 
-	// componentWillMount() {
+	// componentWillUnmount() {
 	// 	this.setState({
-	// 		title: this.props.title,
-	// 		content: this.props.content,
-	// 		game: this.props.gameId,
-	// 		liked: this.props.liked,
-	// 		editing: this.props.previousReview,
-	// 		reviewId: this.props.reviewId,
+	// 		title: '',
+	// 		content: '',
+	// 		game: '',
+	// 		liked: 'neutral',
+	// 		editing: false,
+	// 		reviewId: '',
+	// 		currentUserId: '',
 	// 		message: ''
 	// 	});
 	// }
 
-	componentWillUnmount() {
-		this.setState({
-			title: '',
-			content: '',
-			game: '',
-			liked: 'neutral',
-			editing: false,
-			reviewId: '',
-			message: ''
-		});
-	}
-
 	componentDidUpdate(prevProps, prevState) {
-		// console.log(prevProps);
-		if (prevProps.match.params.gameId !== this.props.match.params.gameId) {
+		if (
+			prevProps.match.params.gameId !== this.props.match.params.gameId ||
+			prevProps.currentUserId !== this.props.currentUserId
+		) {
 			this.setState({
 				title: this.props.title,
 				content: this.props.content,
@@ -55,6 +47,7 @@ class ReviewForm extends React.Component {
 				liked: this.props.liked,
 				editing: this.props.previousReview,
 				reviewId: this.props.reviewId,
+				currentUserId: this.props.currentUserId,
 				message: ''
 			});
 		}
@@ -66,18 +59,32 @@ class ReviewForm extends React.Component {
 
 	updateCache(cache, { data }) {
 		let game;
+		let userReview;
 		try {
 			game = cache.readQuery({ query: FETCH_GAME, variables: { id: this.state.game } });
+			userReview = cache.readQuery({
+				query: FETCH_CURRENT_USER_REVIEW,
+				variables: { gameId: this.state.game, userId: this.state.currentUserId }
+			});
 		} catch (err) {
 			return;
 		}
 		if (game) {
 			const newCachedGame = this.state.editing
-				? merge(game, { reviews: data.updateReview.reviews })
-				: merge(game, { reviews: data.newReview.reviews });
+				? merge(game, data.updateReview.game)
+				: merge(game, data.newReview.game);
 			cache.writeQuery({
 				query: FETCH_GAME,
 				data: { game: newCachedGame }
+			});
+		}
+		if (userReview) {
+			const newCachedReview = this.state.editing
+				? merge(userReview, data.updateReview)
+				: merge(userReview, data.newReview);
+			cache.writeQuery({
+				query: FETCH_CURRENT_USER_REVIEW,
+				data: { currentUserReview: newCachedReview }
 			});
 		}
 	}
@@ -122,7 +129,6 @@ class ReviewForm extends React.Component {
 				update={(cache, data) => this.updateCache(cache, data)}
 				onCompleted={data => {
 					const reviewId = data.updateReview ? this.state.reviewId : data.newReview._id;
-					// console.log(data);
 					this.setState({
 						editing: true,
 						reviewId,

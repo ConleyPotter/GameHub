@@ -6,6 +6,12 @@ export const IS_LOGGED_IN = gql`
 	}
 `;
 
+export const FETCH_CURRENT_USER_ID = gql`
+	query FetchCurrentUserId {
+		currentUserId @client
+	}
+`;
+
 export const FETCH_GAME = gql`
 	query FetchGame($id: ID!) {
 		game(id: $id) {
@@ -19,6 +25,7 @@ export const FETCH_GAME = gql`
 			reviews {
 				_id
 				user {
+					_id
 					username
 				}
 				title
@@ -26,6 +33,7 @@ export const FETCH_GAME = gql`
 				liked
 			}
 			gameConsole: console {
+				_id
 				name
 			}
 		}
@@ -64,12 +72,30 @@ export const FETCH_CONSOLE_BY_URL = gql`
 `;
 
 export const FETCH_CURRENT_USER_REVIEW = gql`
-	query fetchCurrentUserReview($gameId: ID!) {
-		currentUserReview(gameId: $gameId) {
+	query fetchCurrentUserReview($gameId: ID!, $userId: ID!) {
+		currentUserReview(gameId: $gameId, userId: $userId) {
 			_id
 			title
 			content
 			liked
+			game {
+				_id
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+					user {
+						_id
+						username
+					}
+				}
+			}
+			user {
+				_id
+				username
+			}
 		}
 	}
 `;
