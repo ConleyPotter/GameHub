@@ -75,7 +75,7 @@ const login = async data => {
 		if (!passwordMatch) {
 			throw new Error('Password does not match');
 		}
-		const token = await jwt.sign({ id: user._id }, secretOrKey);
+		const token = jwt.sign({ id: user._id }, secretOrKey);
 		return { token, loggedIn: true, ...user._doc, password: null };
 	} catch (err) {
 		throw err;
@@ -85,14 +85,11 @@ const login = async data => {
 const verifyUser = async data => {
 	try {
 		const { token } = data;
-		const decoded = await jwt.verify(token, secretOrKey);
+		const decoded = jwt.verify(token, secretOrKey);
 		const { id } = decoded;
-		let username;
-		const loggedIn = await User.findById(id).then(user => {
-			username = user.username;
-			return user ? true : false;
-		});
-		return { loggedIn, id, username };
+		const user = await User.findById(id).then(user => user);
+		const loggedIn = user ? true : false;
+		return { loggedIn, username: user.username, id: user._id };
 	} catch (err) {
 		return { loggedIn: false };
 	}

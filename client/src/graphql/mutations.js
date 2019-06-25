@@ -5,8 +5,8 @@ export const REGISTER_USER = gql`
 		register(email: $email, password: $password, username: $username) {
 			token
 			loggedIn
-			_id
 			username
+			_id
 		}
 	}
 `;
@@ -16,8 +16,8 @@ export const LOGIN_USER = gql`
 		login(email: $email, password: $password) {
 			token
 			loggedIn
-			_id
 			username
+			_id
 		}
 	}
 `;
@@ -26,9 +26,15 @@ export const VERIFY_USER = gql`
 	mutation VerifyUser($token: String!) {
 		verifyUser(token: $token) {
 			loggedIn
-			_id
 			username
+			_id
 		}
+	}
+`;
+
+export const UPDATE_CURRENT_USER = gql`
+	mutation UpdateCurrentUser($id: ID!, $username: String!) {
+		updateCurrentUser(id: $id, username: $username) @client
 	}
 `;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { LOGIN_USER } from '../../../graphql/mutations';
+import { LOGIN_USER, UPDATE_CURRENT_USER } from '../../../graphql/mutations';
 import { withRouter } from 'react-router-dom';
 import './session_forms.scss';
 
@@ -25,13 +25,9 @@ class LoginForm extends React.Component {
 	}
 
 	updateCache(client, { data }) {
-		console.log(data);
+		const { loggedIn, username, _id } = data.login;
 		client.writeData({
-			data: {
-				isLoggedIn: data.login.loggedIn,
-				currentUserId: data.login._id,
-				currentUsername: data.login.username
-			}
+			data: { isLoggedIn: loggedIn, currentUser: username, currentUserId: _id }
 		});
 	}
 
@@ -40,8 +36,10 @@ class LoginForm extends React.Component {
 			<Mutation
 				mutation={LOGIN_USER}
 				onCompleted={data => {
-					const { token } = data.login;
+					const { token, username, _id } = data.login;
 					localStorage.setItem('auth-token', token);
+					localStorage.setItem('currentUsername', username);
+					localStorage.setItem('currentUserId', _id);
 					this.props.history.push('/');
 				}}
 				update={(client, data) => this.updateCache(client, data)}
