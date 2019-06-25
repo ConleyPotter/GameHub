@@ -2,6 +2,8 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { FETCH_GAME } from '../../graphql/queries';
 import config from '../../config';
+import ReviewList from '../reviews/ReviewList';
+import ReviewForm from '../forms/reviews/ReviewForm';
 import './game_detail.scss';
 
 class GameDetail extends React.Component {
@@ -37,7 +39,7 @@ class GameDetail extends React.Component {
 						if (loading) return 'Loading...';
 						if (error) return `Error! ${error.message}`;
 						let {
-							id,
+							_id,
 							name,
 							description,
 							releaseDate,
@@ -68,10 +70,7 @@ class GameDetail extends React.Component {
 						const coverImage = imageURL ? (
 							<img className="cover-image" src={imageURL} alt={`${name} cover`} />
 						) : null;
-						const reviewForm = <div className="game-review-form">{'{Review Form Placeholder}'}</div>;
-						const publishedReviews = (
-							<div className="published-reviews">{'{Published Reviews Placeholder}'}</div>
-						);
+
 						return (
 							<div className="display-page-full-container">
 								<div className="game-detail-header">
@@ -120,8 +119,8 @@ class GameDetail extends React.Component {
 										</main>
 									</div>
 									<div className="game-reviews">
-										{reviewForm}
-										<div className="published-reviews">{publishedReviews}</div>
+										<ReviewForm gameId={_id} />
+										<ReviewList reviews={reviews} />
 									</div>
 								</div>
 							</div>

@@ -1,0 +1,58 @@
+@import '../../variables.scss';
+
+.published-reviews,
+.no-reviews {
+	width: 55%;
+	display: flex;
+	flex-direction: column;
+
+	.detail-field-label {
+		margin-bottom: 10px;
+	}
+
+	.reviews-list {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+
+		.review-list-item {
+			width: 100%;
+			display: flex;
+			border: 1px solid black;
+			margin: 10px 0;
+
+			.user-info {
+				display: flex;
+				flex-direction: column;
+				margin: 10px;
+
+				.avatar {
+					width: 80px;
+					height: 80px;
+					border: 1px solid black;
+					margin-bottom: 5px;
+				}
+
+				.username {
+					color: $turquoise;
+					font-weight: 700;
+				}
+			}
+
+			.review-details {
+				display: flex;
+				flex-direction: column;
+				margin: 10px;
+
+				.title {
+					color: $dark-green;
+					font-weight: 700;
+				}
+
+				.content {
+				}
+			}
+		}
+	}
+}
