@@ -1,0 +1,48 @@
+@import '../../../variables.scss';
+
+.review-form {
+	.form-header {
+	}
+
+	.title-container {
+		.title-label {
+		}
+		.title-input {
+		}
+	}
+
+	.content-container {
+		.content-input {
+			width: 100%;
+			min-height: 100px;
+		}
+	}
+
+	.review-form-button {
+		border-radius: 5px;
+		padding: 8px 15px;
+		margin: 0 5px;
+		border: 1px solid black;
+	}
+
+	.like-button {
+	}
+
+	.dislike-button {
+	}
+
+	.submit-button {
+	}
+
+	.liked {
+		background-color: $turquoise;
+		color: white;
+		border: none;
+	}
+
+	.disliked {
+		background-color: $red;
+		color: white;
+		border: none;
+	}
+}

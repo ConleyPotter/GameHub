@@ -21,7 +21,12 @@
 			display: flex;
 			border: 1px solid black;
 			margin: 10px 0;
-
+			&.liked {
+				background-color: $turquoise-bg;
+			}
+			&.disliked {
+				background-color: $red-bg;
+			}
 			.user-info {
 				display: flex;
 				flex-direction: column;

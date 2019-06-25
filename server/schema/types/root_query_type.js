@@ -66,7 +66,8 @@ const RootQuery = new GraphQLObjectType({
 		game: {
 			type: GameType,
 			args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-			resolve(_, { id }) {
+			resolve: async (_, { id }, ctx) => {
+				await AuthService.verifyUser({ token: ctx.token });
 				return Game.findById(id);
 			}
 		},
@@ -81,8 +82,9 @@ const RootQuery = new GraphQLObjectType({
 			args: { gameId: { type: new GraphQLNonNull(GraphQLID) } },
 			resolve: async (_, { gameId }, ctx) => {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				console.log(validUser);
 				if (validUser.loggedIn) {
-					return Review.findOne({ user: validUser.id, game: gameId }).then(review => review);
+					return await Review.findOne({ user: validUser.id, game: gameId }).then(review => review);
 				} else {
 					return 'Log in to leave a review';
 				}

@@ -46,3 +46,24 @@ export const CREATE_REVIEW = gql`
 		}
 	}
 `;
+
+export const UPDATE_REVIEW = gql`
+	mutation UpdateReview($_id: ID!, $title: String, $content: String, $liked: Boolean!) {
+		updateReview(_id: $_id, title: $title, content: $content, liked: $liked) {
+			_id
+			likes
+			dislikes
+			rating
+			reviews {
+				_id
+				title
+				content
+				liked
+				user {
+					_id
+					username
+				}
+			}
+		}
+	}
+`;

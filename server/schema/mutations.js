@@ -142,6 +142,28 @@ const Mutation = new GraphQLObjectType({
 			resolve(_, { _id }) {
 				return Review.remove({ _id });
 			}
+		},
+		updateReview: {
+			type: GameType,
+			args: {
+				_id: { type: new GraphQLNonNull(GraphQLID) },
+				title: { type: GraphQLString },
+				content: { type: GraphQLString },
+				liked: { type: new GraphQLNonNull(GraphQLBoolean) }
+			},
+			resolve: async function(_, args) {
+				const updatedReview = await Review.findOneAndUpdate({ _id: args._id }, args);
+				return Game.findById(updatedReview.game).then(async game => {
+					if (args.liked) {
+						game.dislikes--;
+						game.likes++;
+					} else {
+						game.likes--;
+						game.dislikes++;
+					}
+					return await game.save();
+				});
+			}
 		}
 	}
 });

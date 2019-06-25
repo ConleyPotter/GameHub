@@ -49,7 +49,6 @@ class GameDetail extends React.Component {
 							rating,
 							reviews
 						} = data.game;
-						console.log(data.game);
 						if (videoUrl) {
 							let videoUrlPath = videoUrl.split('=')[1];
 							videoUrl = `https://www.youtube.com/embed/${videoUrlPath}`;
@@ -131,12 +130,14 @@ class GameDetail extends React.Component {
 											{({ loading, error, data }) => {
 												if (loading) return 'Loading Review Form...';
 												if (error) return `Error! ${error.message}`;
+												// console.log(this.props.match.params.gameId);
+												// console.log(data);
 												let title = '';
 												let content = '';
 												let reviewId = '';
 												let liked = 'neutral';
 												let previousReview = false;
-												if (data.currentUserReview) {
+												if (data.currentUserReview._id) {
 													previousReview = true;
 													reviewId = data.currentUserReview._id;
 													title = data.currentUserReview.title;

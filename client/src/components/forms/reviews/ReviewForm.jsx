@@ -1,8 +1,10 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { FETCH_GAME } from '../../../graphql/queries';
-import { CREATE_REVIEW } from '../../../graphql/mutations';
+import { CREATE_REVIEW, UPDATE_REVIEW } from '../../../graphql/mutations';
 import { merge } from 'lodash';
+import './review_form.scss';
 
 class ReviewForm extends React.Component {
 	constructor(props) {
@@ -19,6 +21,45 @@ class ReviewForm extends React.Component {
 		};
 	}
 
+	// componentWillMount() {
+	// 	this.setState({
+	// 		title: this.props.title,
+	// 		content: this.props.content,
+	// 		game: this.props.gameId,
+	// 		liked: this.props.liked,
+	// 		editing: this.props.previousReview,
+	// 		reviewId: this.props.reviewId,
+	// 		message: ''
+	// 	});
+	// }
+
+	componentWillUnmount() {
+		this.setState({
+			title: '',
+			content: '',
+			game: '',
+			liked: 'neutral',
+			editing: false,
+			reviewId: '',
+			message: ''
+		});
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		// console.log(prevProps);
+		if (prevProps.match.params.gameId !== this.props.match.params.gameId) {
+			this.setState({
+				title: this.props.title,
+				content: this.props.content,
+				game: this.props.gameId,
+				liked: this.props.liked,
+				editing: this.props.previousReview,
+				reviewId: this.props.reviewId,
+				message: ''
+			});
+		}
+	}
+
 	update(field) {
 		return e => this.setState({ [field]: e.target.value });
 	}
@@ -31,7 +72,9 @@ class ReviewForm extends React.Component {
 			return;
 		}
 		if (game) {
-			const newCachedGame = merge(game, { reviews: data.newReview.reviews });
+			const newCachedGame = this.state.editing
+				? merge(game, { reviews: data.updateReview.reviews })
+				: merge(game, { reviews: data.newReview.reviews });
 			cache.writeQuery({
 				query: FETCH_GAME,
 				data: { game: newCachedGame }
@@ -48,42 +91,49 @@ class ReviewForm extends React.Component {
 		};
 	}
 
-	handleSubmit(e, createReview) {
+	handleSubmit(e, submitReview) {
 		e.preventDefault();
 		if (this.state.liked === 'neutral') {
 			this.setState({ message: 'Select either "Like" or "Dislike" above' });
 			return;
 		}
 
-		if (this.state.editing) {
-			return;
-		} else {
-			createReview({
-				variables: {
-					title: this.state.title,
-					content: this.state.content,
-					game: this.state.game,
-					liked: this.state.liked
-				}
-			});
-		}
+		// if (this.state.editing) {
+		// 	return;
+		// } else {
+		submitReview({
+			variables: {
+				_id: this.state.reviewId,
+				title: this.state.title,
+				content: this.state.content,
+				game: this.state.game,
+				liked: this.state.liked
+			}
+		});
+		// }
 	}
 
 	render() {
+		const formMutation = this.state.editing ? UPDATE_REVIEW : CREATE_REVIEW;
 		return (
 			<Mutation
-				mutation={CREATE_REVIEW}
+				mutation={formMutation}
 				onError={err => this.setState({ message: err.message })}
 				update={(cache, data) => this.updateCache(cache, data)}
 				onCompleted={data => {
+					const reviewId = data.updateReview ? this.state.reviewId : data.newReview._id;
+					// console.log(data);
 					this.setState({
-						message: `New review created successfully`
+						editing: true,
+						reviewId,
+						message: `${this.state.editing ? 'Review updated' : 'New review created'} successfully`
 					});
 				}}
 			>
-				{(createReview, { data }) => (
+				{(submitReview, { data }) => (
 					<div className="review-form-container">
-						<form className="review-form" onSubmit={e => this.handleSubmit(e, createReview)}>
+						<h3 className="form-header detail-field-label">Write a Review</h3>
+						<form className="review-form" onSubmit={e => this.handleSubmit(e, submitReview)}>
 							<div className="title-container">
 								<label className="title-label detail-field-label">Title: </label>
 								<input
@@ -100,18 +150,18 @@ class ReviewForm extends React.Component {
 									onChange={this.update('content')}
 									value={this.state.content}
 									placeholder="Share your thoughts!"
-									cols="30"
-									rows="10"
 								/>
 							</div>
 							<button
-								className={`${this.state.liked === true ? 'liked ' : ''}like-button`}
+								className={`${this.state.liked === true ? 'liked ' : ''}like-button review-form-button`}
 								onClick={this.handleClick('like')}
 							>
 								Like
 							</button>
 							<button
-								className={`${this.state.liked === false ? 'disliked ' : ''}dislike-button`}
+								className={`${this.state.liked === false
+									? 'disliked '
+									: ''}dislike-button review-form-button`}
 								onClick={this.handleClick('dislike')}
 							>
 								Dislike
@@ -119,7 +169,7 @@ class ReviewForm extends React.Component {
 							<button
 								className={`${this.state.liked === true
 									? 'liked '
-									: this.state.liked === false ? 'disliked ' : ''}review-form-submit`}
+									: this.state.liked === false ? 'disliked ' : ''}submit-button review-form-button`}
 								type="submit"
 							>
 								{this.state.editing ? 'Update Review' : 'Post Review'}
@@ -133,4 +183,4 @@ class ReviewForm extends React.Component {
 	}
 }
 
-export default ReviewForm;
+export default withRouter(ReviewForm);
