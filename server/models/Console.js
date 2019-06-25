@@ -16,7 +16,11 @@ const ConsoleSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'game'
     }
-  ]
+  ],
+  imageURL: {
+    type: String,
+    required: true
+  }
 });
 
 ConsoleSchema.statics.findGames = function(consoleId) {
@@ -33,7 +37,8 @@ ConsoleSchema.statics.findTopGames = function(consoleId) {
         .sort((a, b) => {
           return b.rating() - a.rating();
         })
-        .slice(0, 10);
+        .slice(0, 10)
+        .filter(game => game.rating());
     });
 };
 
