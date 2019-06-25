@@ -10,7 +10,7 @@ const ReviewType = require('./types/review_type');
 const Review = mongoose.model('review');
 const AuthService = require('../services/auth');
 
-const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID, GraphQLInt } = graphql;
 
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
@@ -62,10 +62,32 @@ const Mutation = new GraphQLObjectType({
 				description: { type: GraphQLString },
 				releaseDate: { type: GraphQLString },
 				videoUrl: { type: GraphQLString },
-				console: { type: GraphQLID }
+				console: { type: GraphQLID },
+				imageURL: { type: GraphQLID },
+				likes: { type: GraphQLInt },
+				dislikes: { type: GraphQLInt }
 			},
-			resolve(_, { name, description, releaseDate, console, videoUrl }) {
-				return new Game({ name, description, releaseDate, videoUrl, console }).save();
+			resolve: async function(
+				_,
+				{ name, description, releaseDate, console, videoUrl, imageURL, likes, dislikes }
+			) {
+				const newGame = await new Game({
+					name,
+					description,
+					releaseDate,
+					videoUrl,
+					console,
+					imageURL,
+					likes,
+					dislikes
+				}).save();
+				return Game.findById(newGame._id).then(game => {
+					return Console.findById(game.console).then(result => {
+						result.games.push(game._id);
+						result.save();
+						return game.save();
+					});
+				});
 			}
 		},
 		deleteGame: {

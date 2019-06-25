@@ -49,6 +49,10 @@ class GameDetail extends React.Component {
 							rating,
 							reviews
 						} = data.game;
+						if (videoUrl) {
+							let videoUrlPath = videoUrl.split('=')[1];
+							videoUrl = `https://www.youtube.com/embed/${videoUrlPath}`;
+						}
 						const consoleName = gameConsole.name;
 						if (!videoUrl && !this.state.videoUrl) {
 							window.gapi.client.youtube.search
