@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IS_LOGGED_IN } from '../../graphql/queries';
+import { VERIFY_USER } from '../../graphql/mutations';
 import { Query, ApolloConsumer } from 'react-apollo';
 import Modal from '../modal';
 import ConsoleDropdown from './console_dropdown';
@@ -51,13 +52,24 @@ class NavBar extends React.Component {
                   {({ data }) => {
                     if (data.isLoggedIn) {
                       return (
-                        <div>
+                        <div className='navbar-user-actions'>
+                          <div className='navbar-user-info'>
+                            <div>
+                              <img
+                                src='https://ryanacademy.ie/wp-content/uploads/2017/04/user-placeholder.png'
+                                alt='user-avatar'
+                              />
+                            </div>
+                            {data.currentUser}
+                          </div>
                           <button
                             onClick={e => {
                               e.preventDefault();
                               localStorage.removeItem('auth-token');
                               client.writeData({
-                                data: { isLoggedIn: false }
+                                data: {
+                                  isLoggedIn: false
+                                }
                               });
                               this.props.history.push('/');
                             }}
