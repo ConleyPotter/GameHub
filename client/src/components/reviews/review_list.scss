@@ -7,6 +7,7 @@
 	flex-direction: column;
 
 	.detail-field-label {
+		font-size: 20px;
 		margin-bottom: 10px;
 	}
 
@@ -22,11 +23,11 @@
 			border-radius: 5px;
 			margin: 10px 0;
 			&.liked {
-				background-color: $turquoise-bg;
+				background-image: linear-gradient(white, $turquoise-bg);
 				box-shadow: 2px 2px 2px 2px $turquoise;
 			}
 			&.disliked {
-				background-color: $red-bg;
+				background-image: linear-gradient(white, $red-bg);
 				box-shadow: 2px 2px 2px 2px $red;
 			}
 			.user-info {
