@@ -65,11 +65,13 @@ class NavBar extends React.Component {
 														onClick={e => {
 															e.preventDefault();
 															localStorage.removeItem('auth-token');
+															localStorage.removeItem('currentUser');
+															localStorage.removeItem('currentUserId');
 															client.writeData({
 																data: {
-																	isLoggedIn: false
-																	// currentUserId: '',
-																	// currentUser: ''
+																	isLoggedIn: false,
+																	currentUserId: '',
+																	currentUser: ''
 																}
 															});
 															this.props.history.push('/');

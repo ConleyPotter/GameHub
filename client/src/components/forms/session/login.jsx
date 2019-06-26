@@ -38,7 +38,7 @@ class LoginForm extends React.Component {
 				onCompleted={data => {
 					const { token, username, _id } = data.login;
 					localStorage.setItem('auth-token', token);
-					localStorage.setItem('currentUsername', username);
+					localStorage.setItem('currentUser', username);
 					localStorage.setItem('currentUserId', _id);
 					this.props.history.push('/');
 				}}

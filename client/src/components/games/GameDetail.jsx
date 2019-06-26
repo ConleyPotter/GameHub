@@ -1,6 +1,6 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW, FETCH_CURRENT_USER_ID } from '../../graphql/queries';
+import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW, IS_LOGGED_IN } from '../../graphql/queries';
 import config from '../../config';
 import ReviewList from '../reviews/ReviewList';
 import ReviewForm from '../forms/reviews/ReviewForm';
@@ -122,10 +122,9 @@ class GameDetail extends React.Component {
 										</main>
 									</div>
 									<div className="game-reviews">
-										<Query query={FETCH_CURRENT_USER_ID}>
+										<Query query={IS_LOGGED_IN}>
 											{({ data }) => {
 												let currentUserId = data.currentUserId ? data.currentUserId : '';
-												console.log(data);
 												return (
 													<Query
 														query={FETCH_CURRENT_USER_REVIEW}

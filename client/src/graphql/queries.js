@@ -4,6 +4,7 @@ export const IS_LOGGED_IN = gql`
 	query IsUserLoggedIn {
 		isLoggedIn @client
 		currentUser @client
+		currentUserId @client
 	}
 `;
 
@@ -67,8 +68,8 @@ export const FETCH_CONSOLE_BY_URL = gql`
 `;
 
 export const FETCH_CURRENT_USER_REVIEW = gql`
-	query fetchCurrentUserReview($gameId: ID!, $userId: ID!) {
-		currentUserReview(gameId: $gameId, userId: $userId) {
+	query fetchCurrentUserReview($gameId: ID!) {
+		currentUserReview(gameId: $gameId) {
 			_id
 			title
 			content

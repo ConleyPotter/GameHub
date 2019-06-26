@@ -78,14 +78,11 @@ const RootQuery = new GraphQLObjectType({
 		},
 		currentUserReview: {
 			type: ReviewType,
-			args: { gameId: { type: new GraphQLNonNull(GraphQLID) }, userId: { type: new GraphQLNonNull(GraphQLID) } },
+			args: { gameId: { type: new GraphQLNonNull(GraphQLID) } },
 			resolve: async (_, { gameId, userId }, ctx) => {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
-				console.log('validUser:', validUser);
-				console.log('userId:', userId);
-				console.log('gameId:', gameId);
-				if (validUser.loggedIn && validUser.id === userId) {
-					return await Review.findOne({ user: validUser.id, game: gameId }).then(review => review);
+				if (validUser.loggedIn) {
+					return await Review.findOne({ user: validUser._id, game: gameId }).then(review => review);
 				} else {
 					return 'Log in to leave a review';
 				}

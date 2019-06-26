@@ -124,7 +124,7 @@ const Mutation = new GraphQLObjectType({
 			resolve: async function(_, { game, title, content, liked }, ctx) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
 				if (validUser.loggedIn) {
-					const user = validUser.id;
+					const user = validUser._id;
 					const newReview = await new Review({ user, game, title, content, liked }).save();
 					await User.addReview({ userId: user, reviewId: newReview });
 					const updatedGame = await Game.addReview({ gameId: game, reviewId: newReview, liked });

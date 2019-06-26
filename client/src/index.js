@@ -17,12 +17,14 @@ const cache = new InMemoryCache({
 	dataIdFromObject: object => object._id || null
 });
 const token = localStorage.getItem('auth-token');
+const currentUser = localStorage.getItem('currentUser');
+const currentUserId = localStorage.getItem('currentUserId');
 
 cache.writeData({
 	data: {
 		isLoggedIn: Boolean(token),
-		currentUser: '',
-		currentUserId: ''
+		currentUser,
+		currentUserId
 	}
 });
 
