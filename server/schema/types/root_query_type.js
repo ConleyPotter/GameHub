@@ -8,6 +8,8 @@ const Game = mongoose.model('game');
 const GameType = require('./game_type');
 const Review = mongoose.model('review');
 const ReviewType = require('./review_type');
+const Survey = mongoose.model('survey');
+const SurveyType = require('./survey_type');
 const AuthService = require('../../services/auth');
 
 const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString, GraphQLInt } = graphql;
@@ -86,6 +88,12 @@ const RootQuery = new GraphQLObjectType({
 				} else {
 					return 'Log in to leave a review';
 				}
+			}
+		},
+		surveys: {
+			type: new GraphQLList(SurveyType),
+			resolve() {
+				return Survey.find({});
 			}
 		}
 	}
