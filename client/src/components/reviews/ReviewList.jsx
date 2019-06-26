@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDate } from '../../services/format';
 import './review_list.scss';
 
 export default function ReviewIndex({ reviews }) {
@@ -17,6 +18,7 @@ export default function ReviewIndex({ reviews }) {
 					<p className="disliked-label">This user disliked this game.</p>
 				)}
 				<p className="content">{review.content}</p>
+				<p className="publish-date">Review published: {formatDate(review.date)}</p>
 			</div>
 		</li>
 	));

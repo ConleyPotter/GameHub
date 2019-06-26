@@ -45,6 +45,7 @@ export const CREATE_REVIEW = gql`
 			title
 			content
 			liked
+			date
 			game {
 				_id
 				likes
@@ -72,6 +73,7 @@ export const UPDATE_REVIEW = gql`
 			title
 			content
 			liked
+			date
 			game {
 				_id
 				likes

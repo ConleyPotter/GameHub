@@ -27,6 +27,7 @@ export const FETCH_GAME = gql`
 				title
 				content
 				liked
+				date
 			}
 			gameConsole: console {
 				_id
@@ -37,7 +38,7 @@ export const FETCH_GAME = gql`
 `;
 
 export const FETCH_GAMES = gql`
-	query FetchGaames($name: String!) {
+	query FetchGames($name: String!) {
 		games(name: $name) {
 			_id
 			name
@@ -84,6 +85,7 @@ export const FETCH_CURRENT_USER_REVIEW = gql`
 			title
 			content
 			liked
+			date
 			game {
 				_id
 				rating
@@ -92,6 +94,7 @@ export const FETCH_CURRENT_USER_REVIEW = gql`
 					title
 					content
 					liked
+					date
 					user {
 						_id
 						username
