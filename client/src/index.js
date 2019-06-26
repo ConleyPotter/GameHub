@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { ApolloProvider } from 'react-apollo';
@@ -29,10 +30,17 @@ cache.writeData({
 });
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:5000/graphql',
-	headers: {
-		authorization: localStorage.getItem('auth-token')
-	}
+	uri: 'http://localhost:5000/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+	const token = localStorage.getItem('auth-token');
+	return {
+		headers: {
+			...headers,
+			authorization: token ? token : ''
+		}
+	};
 });
 
 const errorLink = onError(({ graphQLErrors }) => {
@@ -42,7 +50,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 });
 
 const client = new ApolloClient({
-	link: ApolloLink.from([errorLink, httpLink]),
+	link: authLink.concat(httpLink, errorLink), //ApolloLink.from([errorLink, httpLink]),
 	cache,
 	onError: ({ networkError, graphQLErrors }) => {
 		console.log('graphQLErrors', graphQLErrors);
@@ -63,7 +71,9 @@ if (token) {
 } else {
 	cache.writeData({
 		data: {
-			isLoggedIn: false
+			isLoggedIn: false,
+			currentUser: '',
+			currentUserId: ''
 		}
 	});
 }
