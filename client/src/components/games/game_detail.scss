@@ -76,22 +76,6 @@
 				width: 70%;
 				display: flex;
 				flex-direction: column;
-				.game-trailer-container {
-					width: 100%;
-					display: flex;
-					flex-direction: column;
-					.game-video-container {
-						align-self: center;
-						width: 800px;
-						max-width: 100%;
-						height: 450px;
-						margin: 10px 0;
-						.game-video {
-							width: 100%;
-							height: 100%;
-						}
-					}
-				}
 
 				.game-description-container {
 					.detail-field-label {
@@ -100,16 +84,6 @@
 						margin-top: 10px;
 					}
 				}
-			}
-		}
-
-		.game-reviews {
-			display: flex;
-			justify-content: space-between;
-			width: 100%;
-			margin-top: 10px;
-			.game-review-form {
-				width: 30%;
 			}
 		}
 	}
