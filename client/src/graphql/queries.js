@@ -37,11 +37,14 @@ export const FETCH_GAME = gql`
 `;
 
 export const FETCH_GAMES = gql`
-  query FetchGaames($name: String!) {
-    games(name: $name) {
+  query FetchGames($name: String!, $limit: Int) {
+    games(name: $name, limit: $limit) {
       _id
       name
       imageURL
+      console {
+        name
+      }
     }
   }
 `;
