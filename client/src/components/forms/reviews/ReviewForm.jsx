@@ -4,6 +4,7 @@ import { Mutation } from 'react-apollo';
 import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW } from '../../../graphql/queries';
 import { CREATE_REVIEW, UPDATE_REVIEW } from '../../../graphql/mutations';
 import { merge } from 'lodash';
+import LoginModal from '../../modal';
 import './review_form.scss';
 
 class ReviewForm extends React.Component {
@@ -18,8 +19,14 @@ class ReviewForm extends React.Component {
 			editing: this.props.previousReview,
 			reviewId: this.props.reviewId,
 			currentUserId: this.props.currentUserId,
-			message: ''
+			message: '',
+			modalOpen: false
 		};
+		this.closeModal = this.closeModal.bind(this);
+	}
+
+	closeModal() {
+		this.setState({ modalOpen: false, modalType: null });
 	}
 
 	componentDidUpdate(prevProps) {
@@ -89,6 +96,10 @@ class ReviewForm extends React.Component {
 		e.preventDefault();
 		if (this.state.liked === 'neutral') {
 			this.setState({ message: 'Select either "Like" or "Dislike" above' });
+			return;
+		}
+		if (!this.state.currentUserId) {
+			this.setState({ modalOpen: true });
 			return;
 		}
 		submitReview({
@@ -165,6 +176,7 @@ class ReviewForm extends React.Component {
 							</button>
 						</form>
 						<p>{this.state.message}</p>
+						{this.state.modalOpen && <LoginModal type="login" closeModal={this.closeModal} />}
 					</div>
 				)}
 			</Mutation>
