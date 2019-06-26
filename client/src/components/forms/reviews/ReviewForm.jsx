@@ -65,8 +65,8 @@ class ReviewForm extends React.Component {
 		}
 		if (game) {
 			const newCachedGame = this.state.editing
-				? merge(game, data.updateReview.game)
-				: merge(game, data.newReview.game);
+				? merge(game.game, data.updateReview.game)
+				: merge(game.game, data.newReview.game);
 			cache.writeQuery({
 				query: FETCH_GAME,
 				data: { game: newCachedGame }
@@ -74,8 +74,8 @@ class ReviewForm extends React.Component {
 		}
 		if (userReview) {
 			const newCachedReview = this.state.editing
-				? merge(userReview, data.updateReview)
-				: merge(userReview, data.newReview);
+				? merge(userReview.currentUserReview, data.updateReview)
+				: merge(userReview.currentUserReview, data.newReview);
 			cache.writeQuery({
 				query: FETCH_CURRENT_USER_REVIEW,
 				data: { currentUserReview: newCachedReview }

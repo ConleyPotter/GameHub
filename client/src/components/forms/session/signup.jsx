@@ -28,7 +28,7 @@ class SignupForm extends React.Component {
 	updateCache(client, { data }) {
 		const { loggedIn, username, _id } = data.register;
 		client.writeData({
-			data: { isLoggedIn: data.register.loggedIn, currentUser: username, currentUserId: _id }
+			data: { isLoggedIn: loggedIn, currentUser: username, currentUserId: _id }
 		});
 	}
 
@@ -37,8 +37,10 @@ class SignupForm extends React.Component {
 			<Mutation
 				mutation={REGISTER_USER}
 				onCompleted={data => {
-					const { token } = data.register;
+					const { token, username, _id } = data.register;
 					localStorage.setItem('auth-token', token);
+					localStorage.setItem('currentUser', username);
+					localStorage.setItem('currentUserId', _id);
 					this.props.history.push('/');
 				}}
 				update={(client, data) => this.updateCache(client, data)}
