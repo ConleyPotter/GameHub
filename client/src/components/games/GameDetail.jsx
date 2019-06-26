@@ -1,8 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW, IS_LOGGED_IN } from '../../graphql/queries';
-import ReviewList from '../reviews/ReviewList';
-import ReviewForm from '../forms/reviews/ReviewForm';
+import { FETCH_GAME } from '../../graphql/queries';
+import ReviewsContainer from '../reviews/ReviewsContainer';
 import GameTrailer from './GameTrailer';
 import './game_detail.scss';
 
@@ -64,53 +63,7 @@ class GameDetail extends React.Component {
 										</div>
 									</main>
 								</div>
-								<div className="game-reviews">
-									<Query query={IS_LOGGED_IN}>
-										{({ data }) => {
-											let currentUserId = data.currentUserId ? data.currentUserId : '';
-											return (
-												<Query
-													query={FETCH_CURRENT_USER_REVIEW}
-													variables={{
-														gameId: this.props.match.params.gameId,
-														userId: currentUserId
-													}}
-												>
-													{({ loading, error, data }) => {
-														if (loading) return 'Loading Review Form...';
-														if (error) return `Error! ${error.message}`;
-														let title = '';
-														let content = '';
-														let reviewId = '';
-														let liked = 'neutral';
-														let previousReview = false;
-														if (data.currentUserReview && data.currentUserReview.user) {
-															previousReview = true;
-															reviewId = data.currentUserReview._id;
-															title = data.currentUserReview.title;
-															content = data.currentUserReview.content;
-															liked = data.currentUserReview.liked;
-															currentUserId = data.currentUserReview.user._id;
-														}
-														return (
-															<ReviewForm
-																gameId={_id}
-																title={title}
-																content={content}
-																liked={liked}
-																previousReview={previousReview}
-																reviewId={reviewId}
-																currentUserId={currentUserId}
-															/>
-														);
-													}}
-												</Query>
-											);
-										}}
-									</Query>
-
-									<ReviewList reviews={reviews} />
-								</div>
+								<ReviewsContainer gameId={_id} reviews={reviews} />
 							</div>
 						</div>
 					);

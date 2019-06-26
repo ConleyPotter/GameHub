@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import config from '../../config';
-import './game_detail.scss';
+import './game_trailer.scss';
 
 class GameTrailer extends React.Component {
 	constructor(props) {
@@ -68,7 +68,7 @@ class GameTrailer extends React.Component {
 				</div>
 			);
 		} else {
-			return 'Loading Game Trailer...';
+			return <p className="game-trailer-loading">'Loading Game Trailer...'</p>;
 		}
 	}
 }
