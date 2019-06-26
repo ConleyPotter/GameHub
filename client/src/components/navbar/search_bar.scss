@@ -16,7 +16,7 @@
   width: 400px;
   background-color: white;
   z-index: 50;
-  padding: 20px 0;
+  // padding: 10px 0;
 }
 
 .search-result-item {
@@ -26,6 +26,12 @@
   img {
     max-width: 50px;
     padding-right: 10px;
+  }
+  .search-result-game-info {
+    div {
+      font-size: 12px;
+      padding: 2px 0;
+    }
   }
 }
 

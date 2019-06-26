@@ -43,7 +43,10 @@ class SearchBar extends React.Component {
                             <div className='search-result-item-image'>
                               <img src={game.imageURL} />
                             </div>
-                            {game.name}
+                            <div className='search-result-game-info'>
+                              {game.name}
+                              {/* <div>{`(${game.console.name})`}</div> */}
+                            </div>
                           </div>
                         </Link>
                       );
