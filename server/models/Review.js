@@ -12,15 +12,20 @@ const ReviewSchema = new Schema({
 	},
 	title: {
 		type: String,
-		required: true
+		default: 'Untitled Review',
+		required: false
 	},
 	content: {
 		type: String,
-		required: true
+		required: false
 	},
 	date: {
 		type: Date,
 		default: Date.now
+	},
+	liked: {
+		type: Boolean,
+		required: true
 	}
 });
 
