@@ -32,10 +32,12 @@ class NavBar extends React.Component {
           <div className='main-navbar-container'>
             <div className='navbar-content'>
               <div className='navbar-left'>
-                <div className='navbar-logo'>
-                  <i className='fas fa-gamepad' />
-                  <p>GameHub</p>
-                </div>
+                <Link to='/'>
+                  <div className='navbar-logo'>
+                    <i className='fas fa-gamepad' />
+                    <p>GameHub</p>
+                  </div>
+                </Link>
               </div>
               <div className='navbar-mid'>
                 <SearchBar />
