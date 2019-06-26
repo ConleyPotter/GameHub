@@ -8,6 +8,7 @@ const Game = mongoose.model('game');
 const GameType = require('./game_type');
 const Review = mongoose.model('review');
 const ReviewType = require('./review_type');
+const AuthService = require('../../services/auth');
 
 const { GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString, GraphQLInt } = graphql;
 
@@ -65,7 +66,7 @@ const RootQuery = new GraphQLObjectType({
 		game: {
 			type: GameType,
 			args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-			resolve(_, { id }) {
+			resolve: async (_, { id }, ctx) => {
 				return Game.findById(id);
 			}
 		},
@@ -74,14 +75,19 @@ const RootQuery = new GraphQLObjectType({
 			resolve() {
 				return Review.find({});
 			}
+		},
+		currentUserReview: {
+			type: ReviewType,
+			args: { gameId: { type: new GraphQLNonNull(GraphQLID) }, userId: { type: new GraphQLNonNull(GraphQLID) } },
+			resolve: async (_, { gameId, userId }, ctx) => {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn && validUser._id == userId) {
+					return await Review.findOne({ user: validUser._id, game: gameId }).then(review => review);
+				} else {
+					return 'Log in to leave a review';
+				}
+			}
 		}
-		// topGamesByConsole: {
-		//   type: new GraphQLList(GameType),
-		//   args: { id: { type: GraphQLID } },
-		//   resolve(_, { id }) {
-		//     return Console.findTopGames(id);
-		//   }
-		// }
 	}
 });
 

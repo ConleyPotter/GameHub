@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLID, GraphQLString } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean } = graphql;
 
 const User = mongoose.model('user');
 const Game = mongoose.model('game');
@@ -11,6 +11,7 @@ const ReviewType = new GraphQLObjectType({
 		_id: { type: GraphQLID },
 		title: { type: GraphQLString },
 		content: { type: GraphQLString },
+		liked: { type: GraphQLBoolean },
 		user: {
 			type: require('./user_type'),
 			resolve(parentValue) {

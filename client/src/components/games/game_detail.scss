@@ -1,56 +1,120 @@
 @import '../../variables.scss';
 
-.display-page-container {
+.display-page-full-container {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 20px;
-
-	.game-detail-container {
-		width: 80%;
+	.game-detail-header {
+		width: 100%;
 		display: flex;
-		flex-direction: column;
-		overflow: contain;
-
-		.game-detail-header {
+		justify-content: center;
+		background-image: linear-gradient(
+			rgba(78, 205, 196, 0),
+			rgba(78, 205, 196, 0.05),
+			rgba(78, 205, 196, 0.1),
+			rgba(78, 205, 196, 0.15),
+			rgba(78, 205, 196, 0.2),
+			rgba(78, 205, 196, 0.3),
+			rgba(78, 205, 196, 0.45),
+			rgba(78, 205, 196, 0.5),
+			rgba(78, 205, 196, 0.45),
+			rgba(78, 205, 196, 0.3),
+			rgba(78, 205, 196, 0)
+		);
+		.game-detail-header-inner-container {
 			display: flex;
 			align-content: center;
-			margin-bottom: 10px;
+			padding: 10px 0;
+			width: 80%;
 			.cover-image {
 				width: 150px;
 				height: auto;
 				margin-right: 10px;
+				background-color: #f4f4f4;
+				-webkit-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+				-moz-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+				box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
 			}
-			.game-title {
-				font-size: 32px;
-				font-weight: 700;
-				color: $dark-green;
-			}
-		}
-
-		.game-video-container {
-			align-self: center;
-			width: 800px;
-			max-width: 90%;
-			height: 450px;
-			margin: 10px 0;
-			.game-video {
-				width: 100%;
-				height: 100%;
+			.game-detail-header-content {
+				.game-title {
+					font-size: 32px;
+					font-weight: 700;
+					color: $dark-green;
+				}
+				.game-rating {
+					margin-top: 20px;
+				}
 			}
 		}
+	}
+	.display-page-container {
+		display: flex;
+		flex-direction: column;
+		margin-top: 20px;
+		width: 90%;
 
-		.detail-field-label {
-			font-weight: 700;
-			color: $dark-green;
+		.game-detail {
+			display: flex;
+			width: 100%;
+
+			.game-detail-aside {
+				width: 30%;
+				display: flex;
+				flex-direction: column;
+
+				.console-name {
+					margin-bottom: 10px;
+				}
+
+				.release-date {
+					margin-bottom: 10px;
+				}
+			}
+
+			.game-detail-main {
+				width: 70%;
+				display: flex;
+				flex-direction: column;
+				.game-trailer-container {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					.game-video-container {
+						align-self: center;
+						width: 800px;
+						max-width: 100%;
+						height: 450px;
+						margin: 10px 0;
+						.game-video {
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
+
+				.game-description-container {
+					.detail-field-label {
+					}
+					.game-description {
+						margin-top: 10px;
+					}
+				}
+			}
 		}
 
-		.console-name {
-			margin-bottom: 10px;
+		.game-reviews {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			margin-top: 10px;
+			.game-review-form {
+				width: 30%;
+			}
 		}
-
-		.release-date {
-			margin-bottom: 10px;
-		}
+	}
+	.detail-field-label {
+		font-weight: 700;
+		color: $dark-green;
 	}
 }
