@@ -95,6 +95,22 @@ const RootQuery = new GraphQLObjectType({
 			resolve() {
 				return Survey.find({});
 			}
+		},
+		currentUserSurvey: {
+			type: SurveyType,
+			args: { userId: { type: new GraphQLNonNull(GraphQLID) }, consoleId: { type: new GraphQLNonNull(GraphQLID) } },
+			resolve: async (_, { userId, consoleId }, ctx) => {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn && validUser._id == userId) {
+					return await Survey.findOne({ user: validUser._id, console: consoleId }).
+						then(survey => {
+							console.log(survey);
+							return survey;
+						});
+				} else {
+					return 'Log in to leave a survey response';
+				}
+			}
 		}
 	}
 });

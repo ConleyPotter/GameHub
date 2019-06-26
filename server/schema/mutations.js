@@ -139,17 +139,17 @@ const Mutation = new GraphQLObjectType({
 		newSurvey: {
 			type: SurveyType,
 			args: {
-				console: { type: new GraphQLNonNull(GraphQLID) },
+				consoleId: { type: new GraphQLNonNull(GraphQLID) },
 				user: { type: new GraphQLNonNull(GraphQLID) },
 				favoriteGameOf2019: { type: new GraphQLNonNull(GraphQLID) },
 				favoriteGameOf2018: { type: new GraphQLNonNull(GraphQLID) },
 				mostAnticipatedGame: { type: new GraphQLNonNull(GraphQLID) }
 			},
-			resolve: async function(_, { console, user, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame}, ctx) {
+			resolve: async function(_, { consoleId, user, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame}, ctx) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
 				if (validUser.loggedIn && validUser._id == user) {
 					const user = validUser._id;
-					const newSurvey = await new Survey({ user, console, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame }).save();
+					const newSurvey = await new Survey({ user, consoleId, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame }).save();
 					await User.addSurvey({ userId: user, surveyId: newSurvey });
 					return newSurvey
 				} else {

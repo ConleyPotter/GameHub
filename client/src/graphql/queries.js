@@ -95,3 +95,55 @@ export const FETCH_CURRENT_USER_REVIEW = gql`
 		}
 	}
 `;
+
+export const FETCH_CURRENT_USER_SURVEY = gql`
+	query fetchCurrentUserSurvey($consoleId: ID!, $userId: ID!) {
+		currentUserSurvey(userId: $userId, consoleId: $consoleId) {
+			_id
+			console {
+				_id
+				name
+			}
+			user {
+				_id
+				username
+			}
+			favoriteGameOf2019 {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+				}
+			}
+			favoriteGameOf2018 {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+				}
+			}
+			mostAnticipatedGame {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+				}
+			}
+		}
+	}
+`;

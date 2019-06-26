@@ -34,7 +34,7 @@ const SurveyType = new GraphQLObjectType({
           .catch(err => err)
       }
     },
-    favoriteGameof2018: {
+    favoriteGameOf2018: {
       type: require('./game_type'),
       resolve(parentValue) {
         return Game.findById(parentValue.favoriteGameOf2018Id)

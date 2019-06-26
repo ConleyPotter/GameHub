@@ -91,3 +91,55 @@ export const UPDATE_REVIEW = gql`
 		}
 	}
 `;
+
+export const CREATE_SURVEY = gql`
+	mutation CreateSurvey($consoleId: ID!, $user: ID!, $favoriteGameOf2019: ID!, $favoriteGameOf2018: ID!, $mostAnticipatedGame: ID!) {
+		newSurvey(consoleId: $consoleId, user: $user, favoriteGameOf2019: $favoriteGameOf2019, favoriteGameOf2018: $favoriteGameOf2018, mostAnticipatedGame: $mostAnticipatedGame) {
+			_id
+			console {
+				name
+				_id
+			}
+			user {
+				_id
+				username
+			}
+			favoriteGameOf2019 {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+				}
+			}
+			favoriteGameOf2018 {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+				}
+			}
+			mostAnticipatedGame {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+				}
+			}
+		}
+	}
+`;
