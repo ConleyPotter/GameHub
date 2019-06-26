@@ -68,8 +68,8 @@ export const FETCH_CONSOLE_BY_URL = gql`
 `;
 
 export const FETCH_CURRENT_USER_REVIEW = gql`
-	query fetchCurrentUserReview($gameId: ID!) {
-		currentUserReview(gameId: $gameId) {
+	query fetchCurrentUserReview($gameId: ID!, $userId: ID!) {
+		currentUserReview(gameId: $gameId, userId: $userId) {
 			_id
 			title
 			content

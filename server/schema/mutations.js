@@ -117,13 +117,14 @@ const Mutation = new GraphQLObjectType({
 			type: ReviewType,
 			args: {
 				game: { type: new GraphQLNonNull(GraphQLID) },
+				user: { type: new GraphQLNonNull(GraphQLID) },
 				title: { type: GraphQLString },
 				content: { type: GraphQLString },
 				liked: { type: new GraphQLNonNull(GraphQLBoolean) }
 			},
-			resolve: async function(_, { game, title, content, liked }, ctx) {
+			resolve: async function(_, { game, user, title, content, liked }, ctx) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
-				if (validUser.loggedIn) {
+				if (validUser.loggedIn && validUser._id == user) {
 					const user = validUser._id;
 					const newReview = await new Review({ user, game, title, content, liked }).save();
 					await User.addReview({ userId: user, reviewId: newReview });
@@ -149,11 +150,12 @@ const Mutation = new GraphQLObjectType({
 				_id: { type: new GraphQLNonNull(GraphQLID) },
 				title: { type: GraphQLString },
 				content: { type: GraphQLString },
-				liked: { type: new GraphQLNonNull(GraphQLBoolean) }
+				liked: { type: new GraphQLNonNull(GraphQLBoolean) },
+				user: { type: new GraphQLNonNull(GraphQLID) }
 			},
 			resolve: async function(_, args, ctx) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
-				if (validUser.loggedIn) {
+				if (validUser.loggedIn && args.user == validUser._id) {
 					return await Review.findById(args._id).then(review => {
 						return Game.findById(review.game).then(async game => {
 							if (args.liked && !review.liked) {

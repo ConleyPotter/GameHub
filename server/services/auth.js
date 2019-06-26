@@ -40,9 +40,9 @@ const register = async data => {
 			}
 		);
 
-		user.save();
+		await user.save();
 
-		const token = jwt.sign({ id: user._id }, secretOrKey);
+		const token = await jwt.sign({ id: user._id }, secretOrKey);
 
 		return { token, loggedIn: true, ...user._doc, password: null };
 	} catch (err) {
@@ -85,7 +85,7 @@ const login = async data => {
 const verifyUser = async data => {
 	try {
 		const { token } = data;
-		const decoded = jwt.verify(token, secretOrKey);
+		const decoded = await jwt.verify(token, secretOrKey);
 		const { id } = decoded;
 		const user = await User.findById(id).then(user => user);
 		const loggedIn = user ? true : false;

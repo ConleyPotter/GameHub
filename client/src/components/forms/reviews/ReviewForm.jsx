@@ -114,7 +114,8 @@ class ReviewForm extends React.Component {
 				title: this.state.title,
 				content: this.state.content,
 				game: this.state.game,
-				liked: this.state.liked
+				liked: this.state.liked,
+				user: this.state.currentUserId
 			}
 		});
 		// }

@@ -39,8 +39,8 @@ export const UPDATE_CURRENT_USER = gql`
 `;
 
 export const CREATE_REVIEW = gql`
-	mutation CreateReview($game: ID!, $title: String, $content: String, $liked: Boolean!) {
-		newReview(game: $game, title: $title, content: $content, liked: $liked) {
+	mutation CreateReview($game: ID!, $user: ID!, $title: String, $content: String, $liked: Boolean!) {
+		newReview(game: $game, user: $user, title: $title, content: $content, liked: $liked) {
 			_id
 			title
 			content
@@ -66,8 +66,8 @@ export const CREATE_REVIEW = gql`
 `;
 
 export const UPDATE_REVIEW = gql`
-	mutation UpdateReview($_id: ID!, $title: String, $content: String, $liked: Boolean!) {
-		updateReview(_id: $_id, title: $title, content: $content, liked: $liked) {
+	mutation UpdateReview($_id: ID!, $user: ID!, $title: String, $content: String, $liked: Boolean!) {
+		updateReview(_id: $_id, user: $user, title: $title, content: $content, liked: $liked) {
 			_id
 			title
 			content
