@@ -58,7 +58,6 @@ const Mutation = new GraphQLObjectType({
 			type: GameType,
 			args: {
 				name: { type: GraphQLString },
-				// user: { type: GraphQLID },
 				description: { type: GraphQLString },
 				releaseDate: { type: GraphQLString },
 				videoUrl: { type: GraphQLString },

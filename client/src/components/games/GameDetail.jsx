@@ -136,7 +136,6 @@ class GameDetail extends React.Component {
 														{({ loading, error, data }) => {
 															if (loading) return 'Loading Review Form...';
 															if (error) return `Error! ${error.message}`;
-															console.log(data);
 															let title = '';
 															let content = '';
 															let reviewId = '';

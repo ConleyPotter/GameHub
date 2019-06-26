@@ -22,20 +22,7 @@ class ReviewForm extends React.Component {
 		};
 	}
 
-	// componentWillUnmount() {
-	// 	this.setState({
-	// 		title: '',
-	// 		content: '',
-	// 		game: '',
-	// 		liked: 'neutral',
-	// 		editing: false,
-	// 		reviewId: '',
-	// 		currentUserId: '',
-	// 		message: ''
-	// 	});
-	// }
-
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps) {
 		if (
 			prevProps.match.params.gameId !== this.props.match.params.gameId ||
 			prevProps.currentUserId !== this.props.currentUserId
@@ -104,10 +91,6 @@ class ReviewForm extends React.Component {
 			this.setState({ message: 'Select either "Like" or "Dislike" above' });
 			return;
 		}
-
-		// if (this.state.editing) {
-		// 	return;
-		// } else {
 		submitReview({
 			variables: {
 				_id: this.state.reviewId,
@@ -118,7 +101,6 @@ class ReviewForm extends React.Component {
 				user: this.state.currentUserId
 			}
 		});
-		// }
 	}
 
 	render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { LOGIN_USER, UPDATE_CURRENT_USER } from '../../../graphql/mutations';
+import { LOGIN_USER } from '../../../graphql/mutations';
 import { withRouter } from 'react-router-dom';
 import './session_forms.scss';
 
