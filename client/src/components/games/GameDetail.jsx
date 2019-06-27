@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import { FETCH_GAME } from '../../graphql/queries';
 import ReviewsContainer from '../reviews/ReviewsContainer';
 import GameTrailer from './GameTrailer';
+import GameRating from './GameRating';
 import './game_detail.scss';
 
 class GameDetail extends React.Component {
@@ -55,6 +56,10 @@ class GameDetail extends React.Component {
 												<label className="detail-field-label">Release Date: </label>
 												{releaseDate}
 											</p>
+											<div className="rating-meter-container">
+												<h3 className="detail-field-label">GameHub Rating:</h3>
+												<GameRating rating={rating} />
+											</div>
 										</div>
 									</aside>
 									<main className="game-detail-main">
