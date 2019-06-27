@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const graphql = require('graphql');
+const _ = require('lodash');
 
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;
 
@@ -24,8 +25,9 @@ const UserType = new GraphQLObjectType({
 		},
 		reviews: {
 			type: new GraphQLList(require('./review_type')),
-			resolve(parentValue) {
-				return User.findReviews(parentValue._id);
+			resolve: async parentValue => {
+				const reviews = await User.findReviews(parentValue._id);
+				return _.sortBy(reviews, 'date').reverse();
 			}
 		},
 		surveys: {
