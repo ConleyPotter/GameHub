@@ -3,9 +3,12 @@
 .review-form-container {
 	width: 40%;
 	.form-header {
+		margin-bottom: 10px;
+		font-size: 20px;
 	}
 
 	.title-container {
+		margin-bottom: 5px;
 		.title-label {
 		}
 		.title-input {
@@ -15,35 +18,41 @@
 	.content-container {
 		.content-input {
 			width: 100%;
-			min-height: 100px;
+			min-height: 150px;
+			margin-bottom: 10px;
+			padding: 5px;
+			border: none;
+			border-radius: 5px;
+			outline: none;
+			resize: none;
+			overflow: auto;
+			box-shadow: 0 0 2px 2px inset $off-white;
 		}
 	}
 
-	.review-form-button {
-		border-radius: 5px;
-		padding: 8px 15px;
-		margin: 0 5px;
-		border: 1px solid black;
-	}
+	.review-form-buttons-container {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 5px;
 
-	.like-button {
-	}
+		.review-form-button {
+			border-radius: 5px;
+			padding: 8px 15px;
+			margin: 0 5px;
+			border: 1px solid black;
+		}
 
-	.dislike-button {
-	}
+		.liked {
+			background-color: $turquoise;
+			color: white;
+			border: none;
+		}
 
-	.submit-button {
-	}
-
-	.liked {
-		background-color: $turquoise;
-		color: white;
-		border: none;
-	}
-
-	.disliked {
-		background-color: $red;
-		color: white;
-		border: none;
+		.disliked {
+			background-color: $red;
+			color: white;
+			border: none;
+		}
 	}
 }

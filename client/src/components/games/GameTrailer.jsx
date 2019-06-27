@@ -54,7 +54,7 @@ class GameTrailer extends React.Component {
 
 			return (
 				<div className="game-trailer-container">
-					<h3 className="detail-field-label">Trailer</h3>
+					<h3 className="detail-field-label main">Trailer</h3>
 					<div className="game-video-container">
 						<iframe
 							className="game-video"

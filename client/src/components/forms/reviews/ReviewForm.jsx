@@ -152,28 +152,34 @@ class ReviewForm extends React.Component {
 									placeholder="Share your thoughts!"
 								/>
 							</div>
-							<button
-								className={`${this.state.liked === true ? 'liked ' : ''}like-button review-form-button`}
-								onClick={this.handleClick('like')}
-							>
-								Like
-							</button>
-							<button
-								className={`${this.state.liked === false
-									? 'disliked '
-									: ''}dislike-button review-form-button`}
-								onClick={this.handleClick('dislike')}
-							>
-								Dislike
-							</button>
-							<button
-								className={`${this.state.liked === true
-									? 'liked '
-									: this.state.liked === false ? 'disliked ' : ''}submit-button review-form-button`}
-								type="submit"
-							>
-								{this.state.editing ? 'Update Review' : 'Post Review'}
-							</button>
+							<div className="review-form-buttons-container">
+								<button
+									className={`${this.state.liked === true
+										? 'liked '
+										: ''}like-button review-form-button`}
+									onClick={this.handleClick('like')}
+								>
+									Like
+								</button>
+								<button
+									className={`${this.state.liked === false
+										? 'disliked '
+										: ''}dislike-button review-form-button`}
+									onClick={this.handleClick('dislike')}
+								>
+									Dislike
+								</button>
+								<button
+									className={`${this.state.liked === true
+										? 'liked '
+										: this.state.liked === false
+											? 'disliked '
+											: ''}submit-button review-form-button`}
+									type="submit"
+								>
+									{this.state.editing ? 'Update Review' : 'Post Review'}
+								</button>
+							</div>
 						</form>
 						<p>{this.state.message}</p>
 						{this.state.modalOpen && <LoginModal type="login" closeModal={this.closeModal} />}
