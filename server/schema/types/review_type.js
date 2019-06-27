@@ -12,6 +12,7 @@ const ReviewType = new GraphQLObjectType({
 		title: { type: GraphQLString },
 		content: { type: GraphQLString },
 		liked: { type: GraphQLBoolean },
+		date: { type: GraphQLString },
 		user: {
 			type: require('./user_type'),
 			resolve(parentValue) {

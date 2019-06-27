@@ -27,6 +27,12 @@ const UserType = new GraphQLObjectType({
 			resolve(parentValue) {
 				return User.findReviews(parentValue._id);
 			}
+		},
+		surveys: {
+			type: new GraphQLList(require('./survey_type')),
+			resolve(parentValue) {
+				return User.findSurveys(parentValue._id);
+			}
 		}
 	}
 });

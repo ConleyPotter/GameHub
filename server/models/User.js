@@ -23,6 +23,12 @@ const UserSchema = new Schema({
 			type: Schema.Types.ObjectId,
 			ref: 'review'
 		}
+	],
+	surveys: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'survey'
+		}
 	]
 });
 
@@ -39,6 +45,24 @@ UserSchema.statics.addReview = function({ userId, reviewId }) {
 	return User.findById(userId).then(user => {
 		return Review.findById(reviewId).then(async review => {
 			user.reviews.push(review);
+			return await user.save();
+		});
+	});
+};
+
+UserSchema.statics.findSurveys = function(userId) {
+	return this.findById(userId)
+		.populate('surveys')
+		.then(user => user.surveys);
+};
+
+UserSchema.statics.addSurvey = function({ userId, surveyId }) {
+	const User = mongoose.model('user');
+	const Survey = mongoose.model('survey');
+
+	return User.findById(userId).then(user => {
+		return Survey.findById(surveyId).then(async survey => {
+			user.surveys.push(survey);
 			return await user.save();
 		});
 	});

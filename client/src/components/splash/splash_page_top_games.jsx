@@ -29,6 +29,7 @@ class SplashTopGames extends React.Component {
       <Query query={FETCH_TOP_GAMES_FOR_CONSOLES}>
         {({ loading, error, data }) => {
           if (loading) return <div>loading...</div>;
+          console.log(data);
           let topGames = data.consoles.filter(
             console => console.name === this.state.name
           )[0].topGames;

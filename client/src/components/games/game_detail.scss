@@ -56,19 +56,29 @@
 
 		.game-detail {
 			display: flex;
+			justify-content: space-between;
 			width: 100%;
+			margin-bottom: 10px;
 
 			.game-detail-aside {
 				width: 30%;
-				display: flex;
-				flex-direction: column;
+				.about-container {
+					width: 75%;
+					min-height: 200px;
+					margin: 0 auto;
+					padding: 15px;
+					display: flex;
+					flex-direction: column;
+					border-radius: 5px;
+					box-shadow: 0 0 2px 2px inset $off-white;
 
-				.console-name {
-					margin-bottom: 10px;
-				}
+					.console-name {
+						margin-bottom: 10px;
+					}
 
-				.release-date {
-					margin-bottom: 10px;
+					.release-date {
+						margin-bottom: 10px;
+					}
 				}
 			}
 
@@ -78,6 +88,7 @@
 				flex-direction: column;
 
 				.game-description-container {
+					margin-top: 10px;
 					.detail-field-label {
 					}
 					.game-description {
@@ -86,9 +97,24 @@
 				}
 			}
 		}
+		.fade-divide {
+			height: 30px;
+			width: 100%;
+			background-image: linear-gradient(white, $off-white);
+			border-radius: 5px;
+		}
 	}
 	.detail-field-label {
 		font-weight: 700;
 		color: $dark-green;
+
+		&.main {
+			margin-bottom: 10px;
+			font-size: 20px;
+		}
 	}
+}
+
+.fade-background {
+	background-image: linear-gradient(white, $off-white);
 }

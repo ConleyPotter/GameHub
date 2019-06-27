@@ -102,6 +102,7 @@ export const FETCH_CURRENT_USER_REVIEW = gql`
       title
       content
       liked
+      date
       game {
         _id
         rating
@@ -110,6 +111,7 @@ export const FETCH_CURRENT_USER_REVIEW = gql`
           title
           content
           liked
+          date
           user {
             _id
             username

@@ -8,6 +8,8 @@ const Game = mongoose.model('game');
 const GameType = require('./game_type');
 const Review = mongoose.model('review');
 const ReviewType = require('./review_type');
+const Survey = mongoose.model('survey');
+const SurveyType = require('./survey_type');
 const AuthService = require('../../services/auth');
 
 const {
@@ -102,17 +104,23 @@ const RootQuery = new GraphQLObjectType({
         }
       }
     },
-    recentReviews: {
-      type: new GraphQLList(ReviewType),
+    surveys: {
+      type: new GraphQLList(SurveyType),
       resolve() {
-        return Review.findRecentReviews();
+        return Survey.find({});
       }
-    },
-    mostReviewed: {
-      type: new GraphQLList(GameType),
-      resolve() {
-        return Game.findMostReviewed();
-      }
+    }
+  },
+  recentReviews: {
+    type: new GraphQLList(ReviewType),
+    resolve() {
+      return Review.findRecentReviews();
+    }
+  },
+  mostReviewed: {
+    type: new GraphQLList(GameType),
+    resolve() {
+      return Game.findMostReviewed();
     }
   }
 });

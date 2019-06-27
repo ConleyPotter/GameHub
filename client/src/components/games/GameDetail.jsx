@@ -45,15 +45,17 @@ class GameDetail extends React.Component {
 							<div className="display-page-container">
 								<div className="game-detail">
 									<aside className="game-detail-aside">
-										<h3 className="detail-field-label">About</h3>
-										<p className="console-name">
-											<label className="detail-field-label">Console: </label>
-											{consoleName}
-										</p>
-										<p className="release-date">
-											<label className="detail-field-label">Release Date: </label>
-											{releaseDate}
-										</p>
+										<div className="about-container fade-background">
+											<h3 className="detail-field-label main">About</h3>
+											<p className="console-name">
+												<label className="detail-field-label">Console: </label>
+												{consoleName}
+											</p>
+											<p className="release-date">
+												<label className="detail-field-label">Release Date: </label>
+												{releaseDate}
+											</p>
+										</div>
 									</aside>
 									<main className="game-detail-main">
 										<GameTrailer name={name} videoUrl={videoUrl} consoleName={consoleName} />
@@ -63,6 +65,7 @@ class GameDetail extends React.Component {
 										</div>
 									</main>
 								</div>
+								<div className="fade-divide" />
 								<ReviewsContainer gameId={_id} reviews={reviews} />
 							</div>
 						</div>

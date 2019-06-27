@@ -8,6 +8,8 @@ const ConsoleType = require('./types/console_type');
 const Console = mongoose.model('console');
 const ReviewType = require('./types/review_type');
 const Review = mongoose.model('review');
+const SurveyType = require('./types/survey_type');
+const Survey = mongoose.model('survey');
 const AuthService = require('../services/auth');
 
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID, GraphQLInt, GraphQLBoolean } = graphql;
@@ -131,6 +133,27 @@ const Mutation = new GraphQLObjectType({
 					return newReview;
 				} else {
 					throw new Error('Sorry, you need to be logged in to leave a review');
+				}
+			}
+		},
+		newSurvey: {
+			type: SurveyType,
+			args: {
+				console: { type: new GraphQLNonNull(GraphQLID) },
+				user: { type: new GraphQLNonNull(GraphQLID) },
+				favoriteGameOf2019: { type: new GraphQLNonNull(GraphQLID) },
+				favoriteGameOf2018: { type: new GraphQLNonNull(GraphQLID) },
+				mostAnticipatedGame: { type: new GraphQLNonNull(GraphQLID) }
+			},
+			resolve: async function(_, { console, user, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame}, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn && validUser._id == user) {
+					const user = validUser._id;
+					const newSurvey = await new Survey({ user, console, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame }).save();
+					await User.addSurvey({ userId: user, surveyId: newSurvey });
+					return newSurvey
+				} else {
+					throw new Error('Sorry, you need to be logged in to leave a reivew.');
 				}
 			}
 		},
