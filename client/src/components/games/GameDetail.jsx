@@ -58,7 +58,7 @@ class GameDetail extends React.Component {
 											</p>
 											<div className="rating-meter-container">
 												<h3 className="detail-field-label">GameHub Rating:</h3>
-												<GameRating boxWidth={100} strokeWidth={25} rating={rating} />
+												<GameRating rating={rating} />
 											</div>
 										</div>
 									</aside>
