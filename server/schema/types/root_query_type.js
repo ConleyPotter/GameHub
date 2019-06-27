@@ -101,6 +101,18 @@ const RootQuery = new GraphQLObjectType({
           return 'Log in to leave a review';
         }
       }
+    },
+    recentReviews: {
+      type: new GraphQLList(ReviewType),
+      resolve() {
+        return Review.findRecentReviews();
+      }
+    },
+    mostReviewed: {
+      type: new GraphQLList(GameType),
+      resolve() {
+        return Game.findMostReviewed();
+      }
     }
   }
 });

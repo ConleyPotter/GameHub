@@ -36,6 +36,10 @@ const GameSchema = new Schema({
       ref: 'review'
     }
   ],
+  reviewsLength: {
+    type: Number,
+    default: 0
+  },
   likes: {
     type: Number,
     default: 0
@@ -132,10 +136,29 @@ GameSchema.statics.addReview = function({ gameId, reviewId, liked }) {
   return Game.findById(gameId).then(game => {
     return Review.findById(reviewId).then(async review => {
       game.reviews.push(review);
+      game.reviewsLength++;
       liked ? game.likes++ : game.dislikes++;
       return await game.save();
     });
   });
+};
+
+GameSchema.statics.findMostReviewed = function() {
+  return this.find({})
+    .sort({ reviewsLength: -1 })
+    .limit(10);
+
+  // const Game = mongoose.model('game');
+  // return Game.aggregate(
+  //   [
+  //     { $project: { length: { $size: '$reviews' } } },
+  //     { $sort: { length: -1 } },
+  //     { $limit: 10 }
+  //   ],
+  //   function(err, results) {
+  //     return results;
+  //   }
+  // );
 };
 
 module.exports = mongoose.model('game', GameSchema);
