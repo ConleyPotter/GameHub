@@ -83,13 +83,33 @@ class SurveyForm extends React.Component {
           <div className="survey-form-container">
             <h3>Leave a Survey Response</h3>
             <form onSubmit={e => this.handleSubmit(e, submitSurvey)}>
-              <label>What is your favorite game of the games below?</label>
-              <input type="radio" name="favoriteGameOf2019" value="Game1"/>
-              <input type="radio" name="favoriteGameOf2019" value="Game2"/>
-              <input type="radio" name="favoriteGameOf2019" value="Game3"/>
-              <button type="submit">
-                Submit Survey
-              </button>
+              <label>What is your favorite game of the games below from 2019?</label>
+              <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game1" />
+              Game 1 <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game2" />
+              Game 2 <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game3" />
+              Game 3 <br />
+
+              <label>What is your favorite game of the games below from 2018?</label>
+              <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game1" />
+              Game 1 <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game2" />
+              Game 2 <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game3" />
+              Game 3 <br />
+
+              <label>What game are you most looking forward to coming out?</label>
+              <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game1" />
+              Game 1 <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game2" />
+              Game 2 <br />
+              <input type="radio" name="favoriteGameOf2019" value="Game3" />
+              Game 3 <br />
+              <button type="submit">Submit Survey</button>
             </form>
           </div>
         )}
