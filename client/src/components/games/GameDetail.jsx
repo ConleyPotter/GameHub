@@ -3,8 +3,8 @@ import { Query } from 'react-apollo';
 import { FETCH_GAME } from '../../graphql/queries';
 import ReviewsContainer from '../reviews/ReviewsContainer';
 import GameTrailer from './GameTrailer';
+import GameRating from './GameRating';
 import './game_detail.scss';
-import { describeArc } from '../../services/svg';
 
 class GameDetail extends React.Component {
 	render() {
@@ -57,34 +57,8 @@ class GameDetail extends React.Component {
 												{releaseDate}
 											</p>
 											<div className="rating-meter-container">
-												<svg viewBox="0 0 200 150" className="rating-meter">
-													<path
-														d={describeArc({
-															centerX: 100,
-															centerY: 150,
-															radius: 75,
-															startAngle: 0,
-															endAngle: 180
-														})}
-														fill="none"
-														stroke="white"
-														stroke-width="25"
-													/>
-													<path
-														d={describeArc({
-															centerX: 100,
-															centerY: 150,
-															radius: 75,
-															startAngle: 0,
-															endAngle: 180 * rating / 100
-														})}
-														fill="none"
-														stroke={
-															'rgb(' + (100 - rating) * 2.56 + ',' + rating * 2.56 + ',0)'
-														}
-														stroke-width="25"
-													/>
-												</svg>
+												<h3 className="detail-field-label">GameHub Rating:</h3>
+												<GameRating boxWidth={100} strokeWidth={25} rating={rating} />
 											</div>
 										</div>
 									</aside>
