@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
+const _ = require('lodash');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLList } = graphql;
 const Game = mongoose.model('game');
 const Console = mongoose.model('console');
@@ -31,8 +32,9 @@ const GameType = new GraphQLObjectType({
 		},
 		reviews: {
 			type: new GraphQLList(require('./review_type')),
-			resolve(parentValue) {
-				return Game.findReviews(parentValue._id);
+			resolve: async parentValue => {
+				const reviews = await Game.findReviews(parentValue._id);
+				return _.sortBy(reviews, 'date').reverse();
 			}
 		}
 	})
