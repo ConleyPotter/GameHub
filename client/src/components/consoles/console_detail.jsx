@@ -25,7 +25,10 @@ const ConsoleDetail = props => {
               </div>
             </div>
             <div className='console-detail-game-lists'>
-              <TopRatedGames games={topGames} />
+              <div className='console-top-games-container'>
+                <div className='console-top-games-header'>Top Rated Games</div>
+                <TopRatedGames games={topGames} />
+              </div>
               <UpcomingGames games={upcomingGames} />
             </div>
           </div>
