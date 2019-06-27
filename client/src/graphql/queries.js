@@ -102,6 +102,9 @@ export const FETCH_TRENDING_GAMES = gql`
       name
       imageURL
       rating
+      console {
+        name
+      }
     }
   }
 `;
