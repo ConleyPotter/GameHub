@@ -147,18 +147,41 @@ GameSchema.statics.findMostReviewed = function() {
   return this.find({})
     .sort({ reviewsLength: -1 })
     .limit(10);
-
-  // const Game = mongoose.model('game');
-  // return Game.aggregate(
-  //   [
-  //     { $project: { length: { $size: '$reviews' } } },
-  //     { $sort: { length: -1 } },
-  //     { $limit: 10 }
-  //   ],
-  //   function(err, results) {
-  //     return results;
-  //   }
-  // );
 };
+
+GameSchema.statics.findMostRecentLikes = function() {
+  let checkDate = new Date();
+  checkDate.setDate(checkDate.getDate() - 7);
+  const Review = mongoose.model('review');
+  const Game = mongoose.model('game');
+  return Review.aggregate([
+    { $match: { date: { $gt: checkDate }, liked: true } },
+    { $group: { _id: '$game', count: { $sum: 1 } } },
+    { $sort: { count: -1 } }
+  ]).then(aggregate => {
+    let ids = [];
+    const games = [];
+    aggregate.forEach(obj => ids.push(obj._id));
+    ids = ids.slice(0, 5);
+    ids.forEach(id => {
+      const game = Game.findById(id);
+      games.push(game);
+    });
+    // return Game.find({ _id: { $in: ids } }).then(games => games);
+    return games;
+  });
+};
+
+// const Game = mongoose.model('game');
+// return Game.aggregate(
+//   [
+//     { $project: { length: { $size: '$reviews' } } },
+//     { $sort: { length: -1 } },
+//     { $limit: 10 }
+//   ],
+//   function(err, results) {
+//     return results;
+//   }
+// );
 
 module.exports = mongoose.model('game', GameSchema);

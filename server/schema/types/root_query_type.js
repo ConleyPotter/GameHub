@@ -109,18 +109,24 @@ const RootQuery = new GraphQLObjectType({
       resolve() {
         return Survey.find({});
       }
-    }
-  },
-  recentReviews: {
-    type: new GraphQLList(ReviewType),
-    resolve() {
-      return Review.findRecentReviews();
-    }
-  },
-  mostReviewed: {
-    type: new GraphQLList(GameType),
-    resolve() {
-      return Game.findMostReviewed();
+    },
+    trending: {
+      type: new GraphQLList(GameType),
+      resolve: async () => {
+        return await Game.findMostRecentLikes();
+      }
+    },
+    recentReviews: {
+      type: new GraphQLList(ReviewType),
+      resolve() {
+        return Review.findRecentLikes();
+      }
+    },
+    mostReviewed: {
+      type: new GraphQLList(GameType),
+      resolve() {
+        return Game.findMostReviewed();
+      }
     }
   }
 });

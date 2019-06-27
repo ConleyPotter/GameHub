@@ -14,6 +14,12 @@
   }
 }
 
+.splash-page-lists {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .splash-top-games-container {
   width: 500px;
   padding: 25px;
