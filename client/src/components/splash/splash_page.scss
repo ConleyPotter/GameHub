@@ -1,0 +1,43 @@
+.splash-page-main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.splash-hero-image {
+  padding: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  img {
+    object-fit: cover;
+    max-height: 350px;
+    object-position: 0 40%;
+  }
+}
+
+.splash-top-games-container {
+  width: 500px;
+  padding: 25px;
+  .console-top-games-list {
+    box-shadow: none;
+  }
+}
+
+.splash-top-games-header {
+  text-align: center;
+  font-size: 22px;
+  padding: 5px 5px 15px 5px;
+}
+
+.console-selector-buttons {
+  button {
+    padding: 5px 8px;
+    color: rgb(128, 128, 128);
+    font-size: 14px;
+  }
+  .selected {
+    background-color: #f4f4f4;
+    color: black;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+}

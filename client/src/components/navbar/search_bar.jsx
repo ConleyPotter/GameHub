@@ -20,9 +20,11 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <Query query={FETCH_GAMES} variables={{ name: this.state.name }}>
+      <Query
+        query={FETCH_GAMES}
+        variables={{ name: this.state.name, limit: 8 }}
+      >
         {({ loading, error, data, refetch }) => {
-          console.log(data);
           return (
             <div className='search-container'>
               <input
@@ -45,7 +47,7 @@ class SearchBar extends React.Component {
                             </div>
                             <div className='search-result-game-info'>
                               {game.name}
-                              {/* <div>{`(${game.console.name})`}</div> */}
+                              <div>{`(${game.console.name})`}</div>
                             </div>
                           </div>
                         </Link>
@@ -77,7 +79,7 @@ class SearchBar extends React.Component {
   //           <input
   //             value={this.state.name}
   //             placeholder='Search'
-  //             onChange={this.update(client)}
+  //             onChange={() => this.update(client)}
   //           />
   //           <div className='search-results'>
   //             //{' '}
