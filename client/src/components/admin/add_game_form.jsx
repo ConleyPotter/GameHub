@@ -33,12 +33,18 @@ class AddGameForm extends React.Component {
       imageURL,
       videoUrl
     } = this.state;
+    let date = new Date(releaseDate);
+    date = date
+      .toDateString()
+      .split(' ')
+      .slice(1)
+      .join(' ');
     newGame({
       variables: {
         name,
         console: this.state.consoleId,
         description,
-        releaseDate,
+        releaseDate: date,
         imageURL,
         videoUrl
       }
