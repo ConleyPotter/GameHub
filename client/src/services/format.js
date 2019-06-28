@@ -19,3 +19,18 @@ export function formatDate(dateInt) {
 	);
 	return formattedReviewTime.concat(', ', formattedReviewDate);
 }
+
+export function consoleDisplayToLink(displayName) {
+	switch (displayName) {
+		case 'PlayStation 4':
+			return 'ps4';
+		case 'PC':
+			return 'pc';
+		case 'XBox One':
+			return 'xboxone';
+		case 'Nintendo Switch':
+			return 'switch';
+		default:
+			return '';
+	}
+}

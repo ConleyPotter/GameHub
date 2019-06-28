@@ -8,6 +8,36 @@ export const IS_LOGGED_IN = gql`
 	}
 `;
 
+export const FETCH_USER = gql`
+	query FetchUser($id: ID!) {
+		user(id: $id) {
+			_id
+			username
+			email
+			reviews {
+				_id
+				title
+				content
+				liked
+				date
+				game {
+					_id
+					name
+					imageURL
+					console {
+						_id
+						name
+					}
+				}
+				user {
+					_id
+					username
+				}
+			}
+		}
+	}
+`;
+
 export const FETCH_GAME = gql`
 	query FetchGame($id: ID!) {
 		game(id: $id) {
@@ -23,6 +53,11 @@ export const FETCH_GAME = gql`
 				user {
 					_id
 					username
+				}
+				game {
+					_id
+					name
+					imageURL
 				}
 				title
 				content
@@ -97,17 +132,17 @@ export const FETCH_TOP_GAMES_FOR_CONSOLES = gql`
 `;
 
 export const FETCH_TRENDING_GAMES = gql`
-  {
-    trending {
-      _id
-      name
-      imageURL
-      rating
-      console {
-        name
-      }
-    }
-  }
+	{
+		trending {
+			_id
+			name
+			imageURL
+			rating
+			console {
+				name
+			}
+		}
+	}
 `;
 
 export const FETCH_CURRENT_USER_REVIEW = gql`
@@ -130,6 +165,10 @@ export const FETCH_CURRENT_USER_REVIEW = gql`
 					user {
 						_id
 						username
+					}
+					game {
+						_id
+						name
 					}
 				}
 			}
