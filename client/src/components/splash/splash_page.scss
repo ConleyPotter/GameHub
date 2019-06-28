@@ -20,6 +20,12 @@
   align-items: center;
 }
 
+.splash-pixel-image {
+  img {
+    width: 400px;
+  }
+}
+
 .splash-top-games-container {
   width: 500px;
   padding: 25px;
@@ -45,5 +51,25 @@
     color: black;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+  }
+}
+
+.splash-news-results {
+  display: flex;
+  justify-content: center;
+  img {
+    width: 200px;
+  }
+  .splash-news-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    padding: 15px;
+    div {
+      padding-top: 5px;
+      text-align: center;
+      width: 180px;
+    }
   }
 }
