@@ -1,0 +1,59 @@
+.new-game-form-container {
+  width: 500px;
+}
+
+.new-game-form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  input,
+  textarea {
+    padding: 8px;
+    margin: 10px 0;
+    width: 250px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid rgb(185, 185, 185);
+  }
+
+  button {
+    width: 100px;
+    margin-top: 10px;
+  }
+  p {
+    padding-bottom: 10px;
+    font-size: 28px;
+    font-weight: 200;
+  }
+  .release-date-select {
+    input {
+      width: 150px;
+    }
+    label {
+      padding: 5px;
+      color: rgb(185, 185, 185);
+      font-size: 14px;
+    }
+  }
+}
+
+// .new-game-form-container input {
+//   padding: 8px;
+//   margin: 10px 0;
+//   width: 250px;
+//   font-size: 14px;
+//   border-radius: 5px;
+//   border: 1px solid rgb(185, 185, 185);
+// }
+
+// .new-game-form-container button {
+//   width: 100px;
+//   margin-top: 10px;
+// }
+
+// .new-game-form-container p {
+//   margin: 0;
+//   padding-bottom: 10px;
+//   font-size: 28px;
+//   font-weight: 200;
+// }
