@@ -3,6 +3,7 @@ import { Mutation, Query } from 'react-apollo';
 import { ADD_GAME } from '../../graphql/mutations';
 import { FETCH_CONSOLES } from '../../graphql/queries';
 import { withRouter } from 'react-router-dom';
+import './add_game_form.scss';
 
 class AddGameForm extends React.Component {
   constructor(props) {
@@ -65,21 +66,31 @@ class AddGameForm extends React.Component {
                     onSubmit={e => this.handleSubmit(e, newGame)}
                   >
                     <input placeholder='title' onChange={this.update('name')} />
-                    <input
+                    <textarea
                       placeholder='description'
                       onChange={this.update('description')}
                     />
-                    <select onChange={this.update('consoleId')}>
-                      {consoles.map(consoleItem => {
-                        return (
-                          <option value={consoleItem._id}>
-                            {consoleItem.name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <label>Release Date:</label>
-                    <input type='date' onChange={this.update('releaseDate')} />
+                    <div className='console-select'>
+                      <select onChange={this.update('consoleId')}>
+                        <option selected disabled>
+                          select a console
+                        </option>
+                        {consoles.map(consoleItem => {
+                          return (
+                            <option value={consoleItem._id}>
+                              {consoleItem.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className='release-date-select'>
+                      <label>Release Date:</label>
+                      <input
+                        type='date'
+                        onChange={this.update('releaseDate')}
+                      />
+                    </div>
                     <input
                       placeholder='image url'
                       onChange={this.update('imageURL')}
