@@ -6,6 +6,7 @@ import { IS_LOGGED_IN } from '../../graphql/queries';
 const ProtectedRoute = ({ component: Component, path, exact, ...rest }) => (
   <Query query={IS_LOGGED_IN}>
     {({ data }) => {
+      console.log(data);
       return (
         <Route
           path={path}

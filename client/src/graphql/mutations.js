@@ -33,6 +33,7 @@ export const VERIFY_USER = gql`
       loggedIn
       username
       _id
+      admin
     }
   }
 `;
