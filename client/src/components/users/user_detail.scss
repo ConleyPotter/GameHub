@@ -1,0 +1,45 @@
+@import '../../variables.scss';
+
+.user-detail-container {
+	width: 80%;
+	display: flex;
+	padding: 20px;
+
+	.user-info-container {
+		width: 30%;
+		height: min-content;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		box-shadow: 0px 0px 2px 2px inset $off-white;
+		border-radius: 5px;
+		margin-right: 10px;
+
+		.avatar {
+			max-width: 200px;
+			max-height: 200px;
+			border-radius: 5px;
+			background: $off-white;
+			padding: 5px;
+			align-self: center;
+			margin-bottom: 5px;
+		}
+
+		.username {
+			font-weight: 700;
+			font-size: 20px;
+			color: $dark-green;
+		}
+
+		.email {
+			&:hover {
+				color: $turquoise;
+			}
+		}
+	}
+
+	.reviews-header {
+		font-weight: 700;
+		color: $dark-green;
+	}
+}
