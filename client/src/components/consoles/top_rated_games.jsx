@@ -6,7 +6,7 @@ const TopRatedGames = ({ games }) => {
     <ul className='console-top-games-list'>
       {games.map((game, i) => {
         return (
-          <Link to={`/games/${game._id}`}>
+          <Link to={`/games/${game._id}`} key={i}>
             <div className='console-top-games-item'>
               <div>{i + 1}</div>
               <div className='top-games-thumbnail'>

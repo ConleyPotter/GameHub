@@ -18,7 +18,6 @@ class RecentNews extends React.Component {
         pageSize: 5
       })
       .then(res => {
-        console.log(res);
         this.setState({ loading: false, articles: res.articles });
       });
   }
@@ -32,7 +31,7 @@ class RecentNews extends React.Component {
         <div className='splash-news-results'>
           {this.state.articles.map((article, i) => {
             return (
-              <a href={article.url}>
+              <a href={article.url} key={i}>
                 <div className='splash-news-item'>
                   <img src={article.urlToImage} />
                   <div>{article.title}</div>

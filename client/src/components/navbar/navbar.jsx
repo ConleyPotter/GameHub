@@ -75,13 +75,15 @@ class NavBar extends React.Component {
                               localStorage.removeItem('currentUser');
                               localStorage.removeItem('currentUserId');
                               await client.clearStore();
-                              client.writeData({
+                              await client.writeData({
                                 data: {
                                   isLoggedIn: false,
                                   currentUser: '',
-                                  currentUserId: ''
+                                  currentUserId: '',
+                                  admin: false
                                 }
                               });
+
                               this.props.history.push('/');
                             }}
                             className='session-button'
