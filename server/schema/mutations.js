@@ -11,6 +11,7 @@ const Review = mongoose.model('review');
 const SurveyType = require('./types/survey_type');
 const Survey = mongoose.model('survey');
 const AuthService = require('../services/auth');
+const lodash = require('lodash');
 
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID, GraphQLInt, GraphQLBoolean } = graphql;
 
@@ -145,13 +146,23 @@ const Mutation = new GraphQLObjectType({
 				favoriteGameOf2018: { type: new GraphQLNonNull(GraphQLID) },
 				mostAnticipatedGame: { type: new GraphQLNonNull(GraphQLID) }
 			},
-			resolve: async function(_, { console, user, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame}, ctx) {
+			resolve: async function(
+				_,
+				{ console, user, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame },
+				ctx
+			) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
 				if (validUser.loggedIn && validUser._id == user) {
 					const user = validUser._id;
-					const newSurvey = await new Survey({ user, console, favoriteGameOf2019, favoriteGameOf2018, mostAnticipatedGame }).save();
+					const newSurvey = await new Survey({
+						user,
+						console,
+						favoriteGameOf2019,
+						favoriteGameOf2018,
+						mostAnticipatedGame
+					}).save();
 					await User.addSurvey({ userId: user, surveyId: newSurvey });
-					return newSurvey
+					return newSurvey;
 				} else {
 					throw new Error('Sorry, you need to be logged in to leave a reivew.');
 				}
@@ -162,8 +173,25 @@ const Mutation = new GraphQLObjectType({
 			args: {
 				_id: { type: new GraphQLNonNull(GraphQLID) }
 			},
-			resolve(_, { _id }) {
-				return Review.remove({ _id });
+			resolve: async function(_, { _id }, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return await Review.findById(_id).then(review => {
+						return Game.findById(review.game).then(async game => {
+							return User.findById(review.user).then(async user => {
+								review.liked ? game.likes-- : game.dislikes--;
+								game.reviewsLength--;
+								lodash.remove(game.reviews, review => review._id == _id);
+								const after = await game.save();
+								lodash.remove(user.reviews, review => review._id == _id);
+								await user.save();
+								return await review.remove();
+							});
+						});
+					});
+				} else {
+					throw new Error('Sorry, you need to be logged in to update a review');
+				}
 			}
 		},
 		updateReview: {
