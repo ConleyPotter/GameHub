@@ -2,6 +2,7 @@ import React from 'react';
 import './splash_page.scss';
 import SplashTopGames from './splash_page_top_games';
 import TrendingGames from './trending_games';
+import RecentNews from './recent_news';
 
 const SplashPage = () => {
   return (
@@ -17,6 +18,7 @@ const SplashPage = () => {
           </div>
           <TrendingGames />
         </div>
+        <RecentNews />
       </div>
     </div>
   );
