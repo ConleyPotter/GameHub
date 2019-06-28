@@ -44,6 +44,33 @@ export const UPDATE_CURRENT_USER = gql`
   }
 `;
 
+export const ADD_GAME = gql`
+  mutation AddGame(
+    $console: ID!
+    $name: String!
+    $description: String!
+    $releaseDate: String!
+    $imageURL: String!
+    $videoUrl: String!
+  ) {
+    newGame(
+      console: $console
+      name: $name
+      description: $description
+      releaseDate: $releaseDate
+      imageURL: $imageURL
+      videoUrl: $videoUrl
+    ) {
+      _id
+      name
+      description
+      releaseDate
+      imageURL
+      videoUrl
+    }
+  }
+`;
+
 export const CREATE_REVIEW = gql`
   mutation CreateReview(
     $game: ID!
