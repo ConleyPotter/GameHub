@@ -1,6 +1,8 @@
 import React from 'react';
 import { Query } from 'react-apollo';
+import { Link } from 'react-router-dom';
 import { FETCH_GAME } from '../../graphql/queries';
+import { consoleDisplayToLink } from '../../services/format';
 import ReviewsContainer from '../reviews/ReviewsContainer';
 import GameTrailer from './GameTrailer';
 import GameRating from './GameRating';
@@ -50,7 +52,7 @@ class GameDetail extends React.Component {
 											<h3 className="detail-field-label main">About</h3>
 											<p className="console-name">
 												<label className="detail-field-label">Console: </label>
-												{consoleName}
+												<Link to={`/${consoleDisplayToLink(consoleName)}`}>{consoleName}</Link>
 											</p>
 											<p className="release-date">
 												<label className="detail-field-label">Release Date: </label>
