@@ -54,6 +54,10 @@
   }
 }
 
+.splash-news-container {
+  position: relative;
+}
+
 .splash-news-results {
   display: flex;
   justify-content: center;
@@ -72,4 +76,12 @@
       width: 180px;
     }
   }
+}
+
+.attributed-text {
+  font-size: 12px;
+  color: rgb(179, 179, 179);
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
