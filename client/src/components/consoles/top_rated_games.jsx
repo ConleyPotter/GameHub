@@ -14,7 +14,11 @@ const TopRatedGames = ({ games }) => {
               </div>
               <div className='top-games-game-info'>
                 <div>{game.name}</div>
-
+                {game.console && (
+                  <div className='list-console-name'>{`(${
+                    game.console.name
+                  })`}</div>
+                )}
                 <div className='game-rating'>
                   Rating: <span>{`${game.rating}%`}</span>
                 </div>

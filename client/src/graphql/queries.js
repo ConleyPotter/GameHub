@@ -96,6 +96,20 @@ export const FETCH_TOP_GAMES_FOR_CONSOLES = gql`
 	}
 `;
 
+export const FETCH_TRENDING_GAMES = gql`
+  {
+    trending {
+      _id
+      name
+      imageURL
+      rating
+      console {
+        name
+      }
+    }
+  }
+`;
+
 export const FETCH_CURRENT_USER_REVIEW = gql`
 	query fetchCurrentUserReview($gameId: ID!, $userId: ID!) {
 		currentUserReview(gameId: $gameId, userId: $userId) {

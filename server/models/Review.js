@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const _ = require('lodash');
 
 const ReviewSchema = new Schema({
   user: {
@@ -29,10 +30,26 @@ const ReviewSchema = new Schema({
   }
 });
 
-ReviewSchema.statics.findRecentReviews = function() {
+ReviewSchema.statics.findRecentLikes = function() {
   let checkDate = new Date();
   checkDate.setDate(checkDate.getDate() - 7);
-  return this.find({ date: { $gt: checkDate } });
+  const Game = mongoose.model('game');
+  return this.find({ date: { $gt: checkDate }, liked: true });
+  //   .populate('game')
+  //   .then(reviews => {
+  //     reviews.forEach(review => {
+  //       console.log(review);
+
+  //     });
+  //   });
+  // return this.aggregate([
+  //   { $match: { date: { $gt: checkDate }, liked: true } },
+  //   { $group: { _id: '$game', games: { $push: '$$ROOT' } } }
+  // ]).then(aggregate => {
+  //   const ids = [];
+  //   aggregate.forEach(obj => ids.push(obj._id));
+  //   return Game.find({ _id: { $in: ids } }).then(games => games);
+  // });
 };
 
 module.exports = mongoose.model('review', ReviewSchema);
