@@ -9,7 +9,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
 import { ApolloProvider } from 'react-apollo';
 import { HashRouter } from 'react-router-dom';
 import { VERIFY_USER } from './graphql/mutations';
@@ -51,7 +50,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink, errorLink), //ApolloLink.from([errorLink, httpLink]),
+  link: authLink.concat(httpLink, errorLink),
   cache,
   onError: ({ networkError, graphQLErrors }) => {
     console.log('graphQLErrors', graphQLErrors);

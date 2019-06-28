@@ -75,6 +75,9 @@
 
 					.console-name {
 						margin-bottom: 10px;
+						a:hover {
+							color: $turquoise;
+						}
 					}
 
 					.release-date {

@@ -35,6 +35,14 @@
 				flex-direction: column;
 				margin: 10px;
 
+				&:hover {
+					.username,
+					.game-name,
+					.console-name {
+						color: $turquoise;
+					}
+				}
+
 				.avatar {
 					width: 80px;
 					height: 80px;
@@ -42,11 +50,14 @@
 					margin-bottom: 5px;
 					background-color: $off-white;
 				}
-
-				.username {
-					color: $dark-green;
-					font-weight: 700;
-				}
+			}
+			.username,
+			.game-name {
+				color: $dark-green;
+				font-weight: 700;
+			}
+			.console-name {
+				font-size: 10px;
 			}
 
 			.review-details {
