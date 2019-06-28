@@ -7,7 +7,9 @@ const TrendingGames = () => {
   return (
     <Query query={FETCH_TRENDING_GAMES}>
       {({ loading, error, data }) => {
-        if (loading) return <div>loading...</div>;
+        if (error) console.log(error);
+        if (!data.trending) return null;
+        // if (loading) return <div>loading...</div>;
         return (
           <div className='splash-top-games-container'>
             <div className='splash-top-games-header'>Trending Games</div>

@@ -102,3 +102,21 @@
     font-size: 12px;
   }
 }
+
+.console-videos-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  .console-video {
+    margin: 10px;
+    width: 250px;
+    iframe {
+      max-width: 250px;
+    }
+    .console-video-title {
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+}

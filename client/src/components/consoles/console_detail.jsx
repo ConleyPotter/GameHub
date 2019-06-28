@@ -4,6 +4,7 @@ import { FETCH_CONSOLE_BY_URL } from '../../graphql/queries';
 import { Link } from 'react-router-dom';
 import TopRatedGames from './top_rated_games';
 import UpcomingGames from './upcoming_games';
+import TrendingVideos from './trending_videos';
 import './console_detail.scss';
 
 const ConsoleDetail = props => {
@@ -31,6 +32,7 @@ const ConsoleDetail = props => {
               </div>
               <UpcomingGames games={upcomingGames} />
             </div>
+            <TrendingVideos consoleName={name} />
           </div>
         );
       }}
