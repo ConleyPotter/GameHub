@@ -29,9 +29,9 @@ class ReviewsContainer extends React.Component {
 									let content = '';
 									let reviewId = '';
 									let liked = 'neutral';
-									let previousReview = false;
+									let formMutation = 'new';
 									if (data.currentUserReview && data.currentUserReview.user) {
-										previousReview = true;
+										formMutation = 'update';
 										reviewId = data.currentUserReview._id;
 										title = data.currentUserReview.title;
 										content = data.currentUserReview.content;
@@ -44,7 +44,7 @@ class ReviewsContainer extends React.Component {
 											title={title}
 											content={content}
 											liked={liked}
-											previousReview={previousReview}
+											formMutation={formMutation}
 											reviewId={reviewId}
 											currentUserId={currentUserId}
 										/>

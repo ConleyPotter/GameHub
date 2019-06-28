@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { FETCH_GAME, FETCH_CURRENT_USER_REVIEW } from '../../../graphql/queries';
-import { CREATE_REVIEW, UPDATE_REVIEW } from '../../../graphql/mutations';
+import { CREATE_REVIEW, UPDATE_REVIEW, DELETE_REVIEW } from '../../../graphql/mutations';
 import { merge } from 'lodash';
 import LoginModal from '../../modal';
 import './review_form.scss';
@@ -16,17 +16,18 @@ class ReviewForm extends React.Component {
 			content: this.props.content,
 			game: this.props.gameId,
 			liked: this.props.liked,
-			editing: this.props.previousReview,
+			formMutation: this.props.formMutation,
 			reviewId: this.props.reviewId,
 			currentUserId: this.props.currentUserId,
 			message: '',
-			modalOpen: false
+			modalOpen: false,
+			waiting: false
 		};
 		this.closeModal = this.closeModal.bind(this);
 	}
 
 	closeModal() {
-		this.setState({ modalOpen: false, modalType: null });
+		this.setState({ modalOpen: false });
 	}
 
 	componentDidUpdate(prevProps) {
@@ -39,10 +40,11 @@ class ReviewForm extends React.Component {
 				content: this.props.content,
 				game: this.props.gameId,
 				liked: this.props.liked,
-				editing: this.props.previousReview,
+				formMutation: this.props.formMutation,
 				reviewId: this.props.reviewId,
 				currentUserId: this.props.currentUserId,
-				message: ''
+				message: '',
+				waiting: false
 			});
 		}
 	}
@@ -52,6 +54,20 @@ class ReviewForm extends React.Component {
 	}
 
 	updateCache(cache, { data }) {
+		let resData;
+		switch (this.state.formMutation) {
+			case 'new':
+				resData = data.newReview;
+				break;
+			case 'update':
+				resData = data.updateReview;
+				break;
+			case 'delete':
+				resData = data.deleteReview;
+				break;
+			default:
+				break;
+		}
 		let game;
 		let userReview;
 		try {
@@ -64,21 +80,19 @@ class ReviewForm extends React.Component {
 			return;
 		}
 		if (game) {
-			const newCachedGame = this.state.editing
-				? merge(game.game, data.updateReview.game)
-				: merge(game.game, data.newReview.game);
+			const newCachedGame = merge(game.game, resData.game);
 			cache.writeQuery({
 				query: FETCH_GAME,
 				data: { game: newCachedGame }
+				// data: { game: resData.game }
 			});
 		}
 		if (userReview) {
-			const newCachedReview = this.state.editing
-				? merge(userReview.currentUserReview, data.updateReview)
-				: merge(userReview.currentUserReview, data.newReview);
+			const newCachedReview = merge(userReview.currentUserReview, resData);
 			cache.writeQuery({
 				query: FETCH_CURRENT_USER_REVIEW,
 				data: { currentUserReview: newCachedReview }
+				// data: { currentUserReview: resData }
 			});
 		}
 	}
@@ -86,15 +100,51 @@ class ReviewForm extends React.Component {
 	handleClick(field) {
 		return e => {
 			e.preventDefault();
-			field === 'like'
-				? this.setState({ liked: true, message: '' })
-				: this.setState({ liked: false, message: '' });
+			switch (this.state.formMutation) {
+				case 'new':
+					field === 'like'
+						? this.state.liked === true
+							? this.setState({ liked: 'neutral', message: '' })
+							: this.setState({ liked: true, message: '' })
+						: this.state.liked === false
+							? this.setState({ liked: 'neutral', message: '' })
+							: this.setState({ liked: false, message: '' });
+					break;
+				case 'update':
+					field === 'like'
+						? this.state.liked === true
+							? this.setState({
+									liked: 'neutral',
+									message: 'Submitting will delete your review!',
+									formMutation: 'delete'
+								})
+							: this.setState({ liked: true, message: '', formMutation: 'update' })
+						: this.state.liked === false
+							? this.setState({
+									liked: 'neutral',
+									message: 'Submitting will delete your review!',
+									formMutation: 'delete'
+								})
+							: this.setState({ liked: false, message: '', formMutation: 'update' });
+					break;
+				case 'delete':
+					field === 'like'
+						? this.setState({ liked: true, message: '', formMutation: 'update' })
+						: this.setState({ liked: false, message: '', formMutation: 'update' });
+					break;
+				default:
+					break;
+			}
 		};
 	}
 
 	handleSubmit(e, submitReview) {
 		e.preventDefault();
-		if (this.state.liked === 'neutral') {
+		if (this.state.waiting) {
+			this.setState({ message: 'Slow down there, buddy!' });
+			return;
+		}
+		if (this.state.liked === 'neutral' && this.state.formMutation === 'new') {
 			this.setState({ message: 'Select either "Like" or "Dislike" above' });
 			return;
 		}
@@ -112,21 +162,55 @@ class ReviewForm extends React.Component {
 				user: this.state.currentUserId
 			}
 		});
+		this.setState({ waiting: true });
 	}
 
 	render() {
-		const formMutation = this.state.editing ? UPDATE_REVIEW : CREATE_REVIEW;
+		let formMutation;
+		let buttonText;
+		let successMessage;
+		switch (this.state.formMutation) {
+			case 'new':
+				formMutation = CREATE_REVIEW;
+				buttonText = 'Post Review';
+				successMessage = 'New review created successfully';
+				break;
+			case 'update':
+				formMutation = UPDATE_REVIEW;
+				buttonText = 'Update Review';
+				successMessage = 'Review updated successfully';
+				break;
+			case 'delete':
+				formMutation = DELETE_REVIEW;
+				buttonText = 'Delete Review';
+				successMessage = 'Review deleted successfully';
+				break;
+			default:
+				break;
+		}
 		return (
 			<Mutation
 				mutation={formMutation}
 				onError={err => this.setState({ message: err.message })}
 				update={(cache, data) => this.updateCache(cache, data)}
 				onCompleted={data => {
-					const reviewId = data.updateReview ? this.state.reviewId : data.newReview._id;
+					let reviewId;
+					let nextFormMutation;
+					if (data.updateReview) {
+						reviewId = this.state.reviewId;
+						nextFormMutation = 'update';
+					} else if (data.newReview) {
+						reviewId = data.newReview._id;
+						nextFormMutation = 'update';
+					} else {
+						reviewId = '';
+						nextFormMutation = 'new';
+					}
 					this.setState({
-						editing: true,
+						formMutation: nextFormMutation,
 						reviewId,
-						message: `${this.state.editing ? 'Review updated' : 'New review created'} successfully`
+						message: successMessage,
+						waiting: false
 					});
 				}}
 			>
@@ -177,7 +261,7 @@ class ReviewForm extends React.Component {
 											: ''}submit-button review-form-button`}
 									type="submit"
 								>
-									{this.state.editing ? 'Update Review' : 'Post Review'}
+									{buttonText}
 								</button>
 							</div>
 						</form>

@@ -56,6 +56,11 @@ export const CREATE_REVIEW = gql`
 					title
 					content
 					liked
+					date
+					user {
+						_id
+						username
+					}
 				}
 			}
 			user {
@@ -84,6 +89,44 @@ export const UPDATE_REVIEW = gql`
 					title
 					content
 					liked
+					date
+					user {
+						_id
+						username
+					}
+				}
+			}
+			user {
+				_id
+				username
+			}
+		}
+	}
+`;
+
+export const DELETE_REVIEW = gql`
+	mutation DeleteReview($_id: ID!) {
+		deleteReview(_id: $_id) {
+			_id
+			title
+			content
+			liked
+			date
+			game {
+				_id
+				likes
+				dislikes
+				rating
+				reviews {
+					_id
+					title
+					content
+					liked
+					date
+					user {
+						_id
+						username
+					}
 				}
 			}
 			user {
