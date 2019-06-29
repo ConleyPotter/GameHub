@@ -3,3 +3,4 @@ require('./Console');
 require('./Game');
 require('./Review');
 require('./Survey');
+require('./List');

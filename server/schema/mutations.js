@@ -10,6 +10,8 @@ const ReviewType = require('./types/review_type');
 const Review = mongoose.model('review');
 const SurveyType = require('./types/survey_type');
 const Survey = mongoose.model('survey');
+const ListType = require('./types/list_type');
+const List = mongoose.model('list');
 const AuthService = require('../services/auth');
 const lodash = require('lodash');
 
@@ -225,6 +227,98 @@ const Mutation = new GraphQLObjectType({
 					});
 				} else {
 					throw new Error('Sorry, you need to be logged in to update a review');
+				}
+			}
+		},
+		newList: {
+			type: ListType,
+			args: {
+				name: { type: new GraphQLNonNull(GraphQLString) }
+			},
+			resolve: async function(_, { name }, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					const user = validUser._id;
+					const newList = await new List({ user, name }).save();
+					await User.addList({ userId: user, listId: newList });
+					return newList;
+				} else {
+					throw new Error('Sorry, you need to be logged in to create a list');
+				}
+			}
+		},
+		addToList: {
+			type: ListType,
+			args: {
+				listId: { type: new GraphQLNonNull(GraphQLID) },
+				gameId: { type: new GraphQLNonNull(GraphQLID) }
+			},
+			resolve: async function(_, { listId, gameId }, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return await List.findById(listId).then(async list => {
+						if (!list.games.includes(gameId)) list.games.push(gameId);
+						return await list.save();
+					});
+				} else {
+					throw new Error('Sorry, you need to be logged in to update a list');
+				}
+			}
+		},
+		removeFromList: {
+			type: ListType,
+			args: {
+				listId: { type: new GraphQLNonNull(GraphQLID) },
+				gameId: { type: new GraphQLNonNull(GraphQLID) }
+			},
+			resolve: async function(_, { listId, gameId }, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return await List.findById(listId).then(async list => {
+						list.games = list.games.filter(game => game !== gameId);
+						return await list.save();
+					});
+				} else {
+					throw new Error('Sorry, you need to be logged in to update a list');
+				}
+			}
+		},
+		updateListName: {
+			type: ListType,
+			args: {
+				listId: { type: new GraphQLNonNull(GraphQLID) },
+				name: new GraphQLNonNull(GraphQLString)
+			},
+			resolve: async function(_, { listId, name }, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return await List.findOneAndUpdate(
+						{ _id: listId },
+						{ $set: { name } },
+						{ returnNewDocument: true }
+					);
+				} else {
+					throw new Error('Sorry, you need to be logged in to update a list');
+				}
+			}
+		},
+		deleteList: {
+			type: ListType,
+			args: {
+				listId: { type: new GraphQLNonNull(GraphQLID) }
+			},
+			resolve: async function(_, { listId }, ctx) {
+				const validUser = await AuthService.verifyUser({ token: ctx.token });
+				if (validUser.loggedIn) {
+					return await List.findById(listId).then(list => {
+						return User.findById(list.user).then(async user => {
+							lodash.remove(user.lists, list => list._id == listId);
+							await user.save();
+							return await list.remove();
+						});
+					});
+				} else {
+					throw new Error('Sorry, you need to be logged in to delete a list');
 				}
 			}
 		}
