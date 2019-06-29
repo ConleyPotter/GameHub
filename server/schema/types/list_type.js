@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const List = mongoose.model('list');
+const User = mongoose.model('user');
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 
