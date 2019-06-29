@@ -50,6 +50,7 @@ class AddGameForm extends React.Component {
       }
     }).then(data => {
       // console.log(data);
+      this.props.closeModal();
       this.props.history.push(`/games/${data.data.newGame._id}`);
     });
   }
@@ -61,29 +62,30 @@ class AddGameForm extends React.Component {
           if (loading) return null;
           const { consoles } = data;
           return (
-            <Mutation
-              mutation={ADD_GAME}
-              // update={(cache, data) => this.updateCache(cache, data)}
-            >
+            <Mutation mutation={ADD_GAME}>
               {newGame => (
                 <div className='new-game-form-container'>
                   <form
                     className='new-game-form'
                     onSubmit={e => this.handleSubmit(e, newGame)}
                   >
+                    <p>New Game</p>
                     <input placeholder='title' onChange={this.update('name')} />
                     <textarea
                       placeholder='description'
                       onChange={this.update('description')}
                     />
                     <div className='console-select'>
-                      <select onChange={this.update('consoleId')}>
-                        <option selected disabled>
+                      <select
+                        onChange={this.update('consoleId')}
+                        defaultValue=''
+                      >
+                        <option value='' disabled>
                           select a console
                         </option>
-                        {consoles.map(consoleItem => {
+                        {consoles.map((consoleItem, i) => {
                           return (
-                            <option value={consoleItem._id}>
+                            <option value={consoleItem._id} key={i}>
                               {consoleItem.name}
                             </option>
                           );
