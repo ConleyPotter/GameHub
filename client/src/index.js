@@ -66,7 +66,8 @@ if (token) {
         data: {
           isLoggedIn: data.verifyUser.loggedIn,
           currentUser: data.verifyUser.username,
-          currentUserId: data.verifyUser._id
+          currentUserId: data.verifyUser._id,
+          admin: data.verifyUser.admin
         }
       });
     });
@@ -75,7 +76,8 @@ if (token) {
     data: {
       isLoggedIn: false,
       currentUser: '',
-      currentUserId: ''
+      currentUserId: '',
+      admin: false
     }
   });
 }

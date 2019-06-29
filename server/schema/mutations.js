@@ -67,7 +67,7 @@ const Mutation = new GraphQLObjectType({
 				releaseDate: { type: GraphQLString },
 				videoUrl: { type: GraphQLString },
 				console: { type: GraphQLID },
-				imageURL: { type: GraphQLID },
+				imageURL: { type: GraphQLString },
 				likes: { type: GraphQLInt },
 				dislikes: { type: GraphQLInt }
 			},
@@ -130,9 +130,19 @@ const Mutation = new GraphQLObjectType({
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
 				if (validUser.loggedIn && validUser._id == user) {
 					const user = validUser._id;
-					const newReview = await new Review({ user, game, title, content, liked }).save();
+					const newReview = await new Review({
+						user,
+						game,
+						title,
+						content,
+						liked
+					}).save();
 					await User.addReview({ userId: user, reviewId: newReview });
-					const updatedGame = await Game.addReview({ gameId: game, reviewId: newReview, liked });
+					const updatedGame = await Game.addReview({
+						gameId: game,
+						reviewId: newReview,
+						liked
+					});
 					return newReview;
 				} else {
 					throw new Error('Sorry, you need to be logged in to leave a review');

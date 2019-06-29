@@ -33,6 +33,7 @@ export const VERIFY_USER = gql`
       loggedIn
       username
       _id
+      admin
     }
   }
 `;
@@ -40,6 +41,33 @@ export const VERIFY_USER = gql`
 export const UPDATE_CURRENT_USER = gql`
   mutation UpdateCurrentUser($id: ID!, $username: String!) {
     updateCurrentUser(id: $id, username: $username) @client
+  }
+`;
+
+export const ADD_GAME = gql`
+  mutation AddGame(
+    $console: ID!
+    $name: String!
+    $description: String!
+    $releaseDate: String!
+    $imageURL: String!
+    $videoUrl: String!
+  ) {
+    newGame(
+      console: $console
+      name: $name
+      description: $description
+      releaseDate: $releaseDate
+      imageURL: $imageURL
+      videoUrl: $videoUrl
+    ) {
+      _id
+      name
+      description
+      releaseDate
+      imageURL
+      videoUrl
+    }
   }
 `;
 
