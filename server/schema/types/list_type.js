@@ -19,7 +19,7 @@ const ListType = new GraphQLObjectType({
 			type: new GraphQLList(require('./game_type')),
 			resolve(parentValue) {
 				return List.findbyId(parentValue._id)
-					.popoulate('games')
+					.populate('games')
 					.then(list => list.games)
 					.catch(err => console.log(err));
 			}
