@@ -297,7 +297,7 @@ const Mutation = new GraphQLObjectType({
 			type: ListType,
 			args: {
 				listId: { type: new GraphQLNonNull(GraphQLID) },
-				name: new GraphQLNonNull(GraphQLString)
+				name: { type: new GraphQLNonNull(GraphQLString) }
 			},
 			resolve: async function(_, { listId, name }, ctx) {
 				const validUser = await AuthService.verifyUser({ token: ctx.token });
