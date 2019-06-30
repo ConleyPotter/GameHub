@@ -31,8 +31,17 @@
   padding: 25px;
   .console-top-games-list {
     box-shadow: none;
+    // max-height: 525px;
+    // overflow-y: scroll;
   }
 }
+
+// .splash-trending {
+//   .console-top-games-list {
+//     overflow-y: hidden;
+//     max-height: none;
+//   }
+// }
 
 .splash-top-games-header {
   text-align: center;
