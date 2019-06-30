@@ -193,3 +193,37 @@ export const DELETE_REVIEW = gql`
     }
   }
 `;
+
+export const CREATE_LIST = gql`
+  mutation CreateList($name: String!) {
+    newList(name: $name) {
+      _id
+      name
+      user{
+        _id
+        lists{
+          _id
+          name
+          games{
+            _id
+            name
+            imageURL
+            console{
+              _id
+              name
+            }
+          }
+        }
+      }
+      games{
+        _id
+            name
+            imageURL
+            console{
+              _id
+              name
+            }
+      }
+    }
+  }
+`;
