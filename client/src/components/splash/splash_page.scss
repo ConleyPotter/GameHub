@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .splash-page-main-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -18,6 +20,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 20px;
 }
 
 .splash-pixel-image {
@@ -31,8 +34,17 @@
   padding: 25px;
   .console-top-games-list {
     box-shadow: none;
+    // max-height: 525px;
+    // overflow-y: scroll;
   }
 }
+
+// .splash-trending {
+//   .console-top-games-list {
+//     overflow-y: hidden;
+//     max-height: none;
+//   }
+// }
 
 .splash-top-games-header {
   text-align: center;
@@ -85,4 +97,33 @@
   position: absolute;
   top: 0;
   right: 140px;
+}
+
+.gotw-container {
+  width: 500px;
+  padding: 15px;
+  .gotw-header {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .gotw-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .gotw-name {
+      font-size: 18px;
+    }
+    .gotw-name:hover {
+      color: $turquoise;
+    }
+    .gotw-console {
+      font-size: 14px;
+      color: rgb(179, 179, 179);
+    }
+    img {
+      padding: 10px;
+      max-width: 450px;
+    }
+  }
 }

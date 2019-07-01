@@ -49,7 +49,7 @@ class AddGameForm extends React.Component {
         videoUrl
       }
     }).then(data => {
-      // console.log(data);
+      console.log(data);
       this.props.closeModal();
       this.props.history.push(`/games/${data.data.newGame._id}`);
     });

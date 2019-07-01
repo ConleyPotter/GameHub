@@ -11,7 +11,7 @@ const TrendingGames = () => {
         if (!data.trending) return null;
         // if (loading) return <div>loading...</div>;
         return (
-          <div className='splash-top-games-container'>
+          <div className='splash-top-games-container splash-trending'>
             <div className='splash-top-games-header'>Trending Games</div>
             <TopRatedGames games={data.trending} />
           </div>
