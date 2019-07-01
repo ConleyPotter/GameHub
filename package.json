@@ -4,6 +4,7 @@
 	"description": "A Hub for Games",
 	"main": "index.js",
 	"scripts": {
+		"start": "node app.js",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
 		"server": "nodemon app.js",
 		"client-install": "npm install --prefix client",
