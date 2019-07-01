@@ -17,6 +17,7 @@ const ConsoleDetail = props => {
         if (loading) return null;
         if (error) return error.message;
         const { name, imageURL, topGames, upcomingGames } = data.consoleByURL;
+        console.log(topGames);
         return (
           <div className='console-detail-container'>
             <div className='console-detail-header'>
