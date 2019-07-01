@@ -21,9 +21,6 @@ class RecentNews extends React.Component {
 				this.setState({ loading: false, articles: res.articles });
 			});
 	}
-	// // if (!newsResults) return null;
-	// console.log(newsResults);
-	// console.log('hey');
 	render() {
 		if (this.state.loading) return null;
 		return (
@@ -33,7 +30,7 @@ class RecentNews extends React.Component {
 						return (
 							<a href={article.url} key={i}>
 								<div className="splash-news-item">
-									<img src={article.urlToImage} />
+									<img src={article.urlToImage} alt={article.title} />
 									<div>{article.title}</div>
 								</div>
 							</a>

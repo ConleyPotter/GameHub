@@ -45,7 +45,6 @@ class TrendingVideos extends React.Component {
 			<div className="console-videos-list">
 				{videos.map(video => {
 					const title = video.snippet.title;
-					// const thumbnailUrl = video.snippet.thumbnails.medium.url;
 					const videoId = video.id.videoId;
 					return (
 						<div className="console-video">
@@ -56,8 +55,6 @@ class TrendingVideos extends React.Component {
 								allowFullScreen
 								title={title}
 							/>
-							{/* <img src={thumbnailUrl} />
-              <div className='console-video-title'>{title}</div> */}
 						</div>
 					);
 				})}
