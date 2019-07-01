@@ -22,7 +22,7 @@ const SplashPage = () => {
 						<GameOfTheWeek />
 					</div>
 				</div>
-				{/* <RecentNews /> */}
+				<RecentNews />
 			</div>
 		</div>
 	);
