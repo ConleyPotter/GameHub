@@ -1,4 +1,4 @@
 module.exports = {
-	youtubeKey: process.env.YOUTUBE_KEY,
-	newsKey: process.env.NEWS_KEY
+	youtubeKey: process.env.REACT_APP_YOUTUBE_KEY,
+	newsKey: process.env.REACT_APP_NEWS_KEY
 };
