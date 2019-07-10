@@ -15,7 +15,7 @@ const SplashPage = () => {
 				<div className="splash-page-lists">
 					<SplashTopGames />
 					<div className="splash-pixel-image">
-						<img src="https://png2.kisspng.com/sh/a2575926c75ea708ad16a9967040a858/L0KzQYm3V8A3N6NwgZH0aYP2gLBuTgNxaZRqRdt3dnHndcP6TgBqgJZxRdN7dD35ebXsj71oaZ5qRdN9YYLsPYm3k71iepRmfNc2Z3HwdcS0VfI1OGE3fqMDOETmdYe1UME0OGI5UKU6NUOzSYO4V8E0PWY9S5D5bne=/kisspng-space-invaders-pixel-art-video-game-atari-80s-arcade-games-5b4002f1884ce6.0130148315309217135583.png" />
+						<img src="https://image.flaticon.com/sprites/new_packs/188915-pokemon-go.png" />
 					</div>
 					<div className="splash-page-right">
 						<TrendingGames />
