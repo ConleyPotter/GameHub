@@ -14,82 +14,81 @@ import { HashRouter } from 'react-router-dom';
 import { VERIFY_USER } from './graphql/mutations';
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => object._id || null
+	dataIdFromObject: object => object._id || null
 });
 const token = localStorage.getItem('auth-token');
 const currentUser = localStorage.getItem('currentUser');
 const currentUserId = localStorage.getItem('currentUserId');
 
 cache.writeData({
-  data: {
-    isLoggedIn: Boolean(token),
-    currentUser,
-    currentUserId,
-    admin: false
-  }
+	data: {
+		isLoggedIn: Boolean(token),
+		currentUser,
+		currentUserId,
+		admin: false
+	}
 });
 
 const httpLink = createHttpLink({
-  uri: `http://localhost:${process.env.PORT || 5000}/graphql`
+	uri:
+		process.env.NODE_ENV === 'production' ? 'http://gamehub-app.herokuapp.com/graphql' : 'http://localhost:5000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('auth-token');
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? token : ''
-    }
-  };
+	const token = localStorage.getItem('auth-token');
+	return {
+		headers: {
+			...headers,
+			authorization: token ? token : ''
+		}
+	};
 });
 
 const errorLink = onError(({ graphQLErrors }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message }) => console.log(message));
-  }
+	if (graphQLErrors) {
+		graphQLErrors.map(({ message }) => console.log(message));
+	}
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink, errorLink),
-  cache,
-  onError: ({ networkError, graphQLErrors }) => {
-    console.log('graphQLErrors', graphQLErrors);
-    console.log('networkError', networkError);
-  }
+	link: authLink.concat(httpLink, errorLink),
+	cache,
+	onError: ({ networkError, graphQLErrors }) => {
+		console.log('graphQLErrors', graphQLErrors);
+		console.log('networkError', networkError);
+	}
 });
 
 if (token) {
-  client
-    .mutate({ mutation: VERIFY_USER, variables: { token } })
-    .then(({ data }) => {
-      client.writeData({
-        data: {
-          isLoggedIn: data.verifyUser.loggedIn,
-          currentUser: data.verifyUser.username,
-          currentUserId: data.verifyUser._id,
-          admin: data.verifyUser.admin
-        }
-      });
-    });
+	client.mutate({ mutation: VERIFY_USER, variables: { token } }).then(({ data }) => {
+		client.writeData({
+			data: {
+				isLoggedIn: data.verifyUser.loggedIn,
+				currentUser: data.verifyUser.username,
+				currentUserId: data.verifyUser._id,
+				admin: data.verifyUser.admin
+			}
+		});
+	});
 } else {
-  cache.writeData({
-    data: {
-      isLoggedIn: false,
-      currentUser: '',
-      currentUserId: '',
-      admin: false
-    }
-  });
+	cache.writeData({
+		data: {
+			isLoggedIn: false,
+			currentUser: '',
+			currentUserId: '',
+			admin: false
+		}
+	});
 }
 
 const Root = () => {
-  return (
-    <ApolloProvider client={client}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </ApolloProvider>
-  );
+	return (
+		<ApolloProvider client={client}>
+			<HashRouter>
+				<App />
+			</HashRouter>
+		</ApolloProvider>
+	);
 };
 
 ReactDOM.render(<Root />, document.getElementById('root'));
