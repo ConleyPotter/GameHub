@@ -84,7 +84,6 @@ class ReviewForm extends React.Component {
 			cache.writeQuery({
 				query: FETCH_GAME,
 				data: { game: newCachedGame }
-				// data: { game: resData.game }
 			});
 		}
 		if (userReview) {
@@ -92,7 +91,6 @@ class ReviewForm extends React.Component {
 			cache.writeQuery({
 				query: FETCH_CURRENT_USER_REVIEW,
 				data: { currentUserReview: newCachedReview }
-				// data: { currentUserReview: resData }
 			});
 		}
 	}

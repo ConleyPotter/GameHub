@@ -1,122 +1,106 @@
 @import '../../variables.scss';
 
 .console-detail-container {
-  max-width: 1300px;
-  margin: 0 auto;
+	max-width: 1300px;
+	margin: 0 auto;
 }
 
 .console-detail-header {
-  font-size: 38px;
-  padding: 20px;
+	font-size: 38px;
+	padding: 20px;
 }
 .console-detail-hero-image {
-  margin: 0 auto;
-  max-width: 1200px;
-  img {
-    max-width: 1200px;
-    max-height: 350px;
-    object-fit: cover;
-    padding-bottom: 10px;
-  }
+	margin: 0 auto;
+	max-width: 1200px;
+	img {
+		max-width: 1200px;
+		max-height: 350px;
+		object-fit: cover;
+		padding-bottom: 10px;
+	}
 }
 
-// .console-detail-game-list {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-
-// .console-game-list-item {
-//   padding: 20px;
-//   text-align: center;
-//   img {
-//     max-height: 200px;
-//     width: auto;
-//   }
-// }
-
 .console-top-games-container {
-  // text-align: center;
-  width: 350px;
-  padding: 20px;
+	width: 350px;
+	padding: 20px;
 }
 
 .console-top-games-header {
-  font-size: 20px;
-  text-align: center;
-  padding: 10px;
+	font-size: 20px;
+	text-align: center;
+	padding: 10px;
 }
 
 .console-detail-game-lists {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .console-top-games-list {
-  display: flex;
-  flex-direction: column;
-  // padding: 15px 10px;
-  background-color: #f4f4f4;
-  -webkit-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
-  -moz-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
-  box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+	display: flex;
+	flex-direction: column;
+	background-color: #f4f4f4;
+	-webkit-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+	-moz-box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
+	box-shadow: 2px 3px 3px 2px rgba(0, 0, 0, 0.37);
 }
 
 .console-top-games-item {
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  background-color: #f4f4f4;
-  border-bottom: 1px solid $off-white;
-  div:first-of-type {
-    padding-right: 15px;
-  }
-  div {
-    padding: 0 5px;
-  }
-  span {
-    color: $red;
-  }
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	background-color: #f4f4f4;
+	border-bottom: 1px solid $off-white;
+	div:first-of-type {
+		padding-right: 15px;
+	}
+	div {
+		padding: 0 5px;
+	}
+	span {
+		color: $red;
+	}
 }
 
 .console-top-games-item:hover {
-  background-color: $off-white;
+	background-color: $off-white;
 }
 
 .top-games-thumbnail img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  object-position: 50% 80%;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	object-position: 50% 80%;
 }
 
 .top-games-game-info {
-  div:first-of-type {
-    font-size: 16px;
-    font-weight: bold;
-  }
+	div:first-of-type {
+		font-size: 16px;
+		font-weight: bold;
+	}
 
-  div {
-    padding: 2px;
-  }
-  .list-console-name {
-    font-size: 12px;
-  }
+	div {
+		padding: 2px;
+	}
+	.list-console-name {
+		font-size: 12px;
+	}
 }
 
 .console-videos-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-  .console-video {
-    margin: 10px;
-    width: 250px;
-    iframe {
-      max-width: 250px;
-    }
-    .console-video-title {
-      text-align: center;
-      font-size: 14px;
-    }
-  }
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 20px;
+	.console-video {
+		margin: 10px;
+		width: 250px;
+		iframe {
+			max-width: 250px;
+		}
+		.console-video-title {
+			text-align: center;
+			font-size: 14px;
+		}
+	}
 }

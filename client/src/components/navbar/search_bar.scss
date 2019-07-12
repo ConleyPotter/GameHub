@@ -1,40 +1,39 @@
 @import '../../variables.scss';
 
 .search-container {
-  position: relative;
-  input {
-    border: 1px solid rgb(209, 209, 209);
-    border-radius: 5px;
-    width: 400px;
-    padding: 10px 12px;
-  }
+	position: relative;
+	input {
+		border: 1px solid rgb(209, 209, 209);
+		border-radius: 5px;
+		width: 400px;
+		padding: 10px 12px;
+	}
 }
 
 .search-results {
-  position: absolute;
-  top: 45px;
-  width: 400px;
-  background-color: white;
-  z-index: 50;
-  // padding: 10px 0;
+	position: absolute;
+	top: 45px;
+	width: 400px;
+	background-color: white;
+	z-index: 50;
 }
 
 .search-result-item {
-  display: flex;
-  padding: 5px 15px;
-  align-items: center;
-  img {
-    max-width: 50px;
-    padding-right: 10px;
-  }
-  .search-result-game-info {
-    div {
-      font-size: 12px;
-      padding: 2px 0;
-    }
-  }
+	display: flex;
+	padding: 5px 15px;
+	align-items: center;
+	img {
+		max-width: 50px;
+		padding-right: 10px;
+	}
+	.search-result-game-info {
+		div {
+			font-size: 12px;
+			padding: 2px 0;
+		}
+	}
 }
 
 .search-result-item:hover {
-  background-color: $off-white;
+	background-color: $off-white;
 }

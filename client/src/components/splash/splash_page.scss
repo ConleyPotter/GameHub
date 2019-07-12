@@ -1,129 +1,120 @@
 @import '../../variables.scss';
 
 .splash-page-main-container {
-  max-width: 1400px;
-  margin: 0 auto;
+	max-width: 1400px;
+	margin: 0 auto;
 }
 
 .splash-hero-image {
-  padding: 15px;
-  max-width: 1200px;
-  margin: 0 auto;
-  img {
-    object-fit: cover;
-    max-height: 350px;
-    object-position: 0 40%;
-  }
+	padding: 15px;
+	max-width: 1200px;
+	margin: 0 auto;
+	img {
+		object-fit: cover;
+		max-height: 350px;
+		object-position: 0 40%;
+	}
 }
 
 .splash-page-lists {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 20px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 20px;
 }
 
 .splash-pixel-image {
-  img {
-    width: 400px;
-  }
+	img {
+		width: 400px;
+	}
 }
 
 .splash-top-games-container {
-  width: 500px;
-  padding: 25px;
-  .console-top-games-list {
-    box-shadow: none;
-    // max-height: 525px;
-    // overflow-y: scroll;
-  }
+	width: 500px;
+	padding: 25px;
+	.console-top-games-list {
+		box-shadow: none;
+	}
 }
 
-// .splash-trending {
-//   .console-top-games-list {
-//     overflow-y: hidden;
-//     max-height: none;
-//   }
-// }
-
 .splash-top-games-header {
-  text-align: center;
-  font-size: 22px;
-  padding: 5px 5px 15px 5px;
+	text-align: center;
+	font-size: 22px;
+	padding: 5px 5px 15px 5px;
 }
 
 .console-selector-buttons {
-  button {
-    padding: 5px 8px;
-    color: rgb(128, 128, 128);
-    font-size: 14px;
-  }
-  .selected {
-    background-color: #f4f4f4;
-    color: black;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-  }
+	button {
+		padding: 5px 8px;
+		color: rgb(128, 128, 128);
+		font-size: 14px;
+	}
+	.selected {
+		background-color: #f4f4f4;
+		color: black;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+	}
 }
 
 .splash-news-container {
-  position: relative;
+	position: relative;
 }
 
 .splash-news-results {
-  display: flex;
-  justify-content: center;
-  padding: 5px;
-  img {
-    width: 200px;
-  }
-  .splash-news-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 14px;
-    padding: 15px;
-    div {
-      padding-top: 5px;
-      text-align: center;
-      width: 180px;
-    }
-  }
+	display: flex;
+	justify-content: center;
+	padding: 5px;
+	img {
+		width: 200px;
+	}
+	.splash-news-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 14px;
+		padding: 15px;
+		div {
+			padding-top: 5px;
+			text-align: center;
+			width: 180px;
+		}
+	}
 }
 
 .attributed-text {
-  font-size: 12px;
-  color: rgb(179, 179, 179);
-  position: absolute;
-  top: 0;
-  right: 140px;
+	font-size: 12px;
+	color: rgb(179, 179, 179);
+	position: absolute;
+	top: 0;
+	right: 140px;
 }
 
 .gotw-container {
-  width: 500px;
-  padding: 15px;
-  .gotw-header {
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .gotw-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .gotw-name {
-      font-size: 18px;
-    }
-    .gotw-name:hover {
-      color: $turquoise;
-    }
-    .gotw-console {
-      font-size: 14px;
-      color: rgb(179, 179, 179);
-    }
-    img {
-      padding: 10px;
-      max-width: 450px;
-    }
-  }
+	width: 500px;
+	padding: 15px;
+	.gotw-header {
+		text-align: center;
+		font-size: 18px;
+		font-weight: bold;
+	}
+	.gotw-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.gotw-name {
+			font-size: 18px;
+		}
+		.gotw-name:hover {
+			color: $turquoise;
+		}
+		.gotw-console {
+			font-size: 14px;
+			color: rgb(179, 179, 179);
+		}
+		img {
+			padding: 10px;
+			max-width: 450px;
+		}
+	}
 }
