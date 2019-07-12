@@ -31,7 +31,9 @@ cache.writeData({
 
 const httpLink = createHttpLink({
 	uri:
-		process.env.NODE_ENV === 'production' ? 'http://gamehub-app.herokuapp.com/graphql' : 'http://localhost:5000/graphql'
+		process.env.NODE_ENV === 'production'
+			? 'https://gamehub-app.herokuapp.com/graphql'
+			: 'http://localhost:5000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
