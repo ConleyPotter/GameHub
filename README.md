@@ -3,17 +3,17 @@
 ## Technologies:
 
 * MongoDB
-** Database used to store data
+  * Database used to store data
 * Express
-** JavaScript (ES6) backend API
+  * JavaScript (ES6) backend API
 * React
-** Frontend components built using this framework
+..* Frontend components built using this framework
 * GraphQL
-** Complex queries more efficiently structured and performed using this state-of-the-art technology, in order to show more complex relationships in our data
+  * Complex queries more efficiently structured and performed using this state-of-the-art technology, in order to show more complex relationships in our data
 * Various other middleware and packages used: 
-** Apollo GraphQL
-** Mongoose
-** .env
+  * Apollo GraphQL
+  * Mongoose
+  * .env
 
 #
 
@@ -21,9 +21,9 @@ GameHub is a video games database with social media features. It is inspired by 
 
 * Users can sign up for an account, sign in, and sign out
 * Users can interact with games that have been uploaded to the site by an admin (more on admin later), meaning...
-** Users can leave reviews on games, either liking or disliking the game (they can dislike or like the game independently or leave a short description of their opinion of the game as well)
-** Users can view a photo of the game
-** Users can watch the trailer for the game
+  * Users can leave reviews on games, either liking or disliking the game (they can dislike or like the game independently or leave a short description of their opinion of the game as well)
+  * Users can view a photo of the game
+  * Users can watch the trailer for the game
 * Reviews left by user affect the games _GameHub Rating_, which, in turn, affect where the game is ranked, categorized by game console
 * Users can view the top 3 games for a console, as well as any upcoming games on _Console Home Page_, as well as vidoes related to the console
 * When a user goes to the _Game Show Page_, they can see other players reviews, the _GameHub Rating_ for the game, which is updated live when they leave their review with a CSS animation
