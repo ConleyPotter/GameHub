@@ -71,6 +71,7 @@ const ConsoleDetail = props => {
                               favoriteGameOf2019={favoriteGameOf2019}
                               favoriteGameOf2018={favoriteGameOf2018}
                               mostAnticipatedGame={mostAnticipatedGame}
+                              topGames={topGames}
                             />
                           );
                         }}
